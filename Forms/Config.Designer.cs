@@ -1,4 +1,4 @@
-﻿namespace PJ24_010__Auto_Focus_CCD.Forms
+﻿namespace PJ24_010_Auto_Focus_CCD.Forms
 {
     partial class Config
     {

@@ -1,4 +1,4 @@
-namespace PJ24_010__Auto_Focus_CCD
+namespace PJ24_010_Auto_Focus_CCD
 {
     internal static class Program
     {

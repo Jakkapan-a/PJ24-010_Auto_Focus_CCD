@@ -1,4 +1,4 @@
-﻿namespace PJ24_010__Auto_Focus_CCD
+﻿namespace PJ24_010_Auto_Focus_CCD
 {
     partial class Main
     {
@@ -34,6 +34,7 @@
             configurationToolStripMenuItem = new ToolStripMenuItem();
             testToolStripMenuItem = new ToolStripMenuItem();
             runToolStripMenuItem = new ToolStripMenuItem();
+            parameterToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripProgressBar1 = new ToolStripProgressBar();
             panel1 = new Panel();
@@ -86,19 +87,19 @@
             // oNNXToolStripMenuItem
             // 
             oNNXToolStripMenuItem.Name = "oNNXToolStripMenuItem";
-            oNNXToolStripMenuItem.Size = new Size(220, 22);
+            oNNXToolStripMenuItem.Size = new Size(159, 22);
             oNNXToolStripMenuItem.Text = "ONNX";
             // 
             // configurationToolStripMenuItem
             // 
             configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.F;
-            configurationToolStripMenuItem.Size = new Size(220, 22);
-            configurationToolStripMenuItem.Text = "Configuration";
+            configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
+            configurationToolStripMenuItem.Size = new Size(159, 22);
+            configurationToolStripMenuItem.Text = "Options";
             // 
             // testToolStripMenuItem
             // 
-            testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { runToolStripMenuItem });
+            testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { runToolStripMenuItem, parameterToolStripMenuItem });
             testToolStripMenuItem.Name = "testToolStripMenuItem";
             testToolStripMenuItem.Size = new Size(39, 20);
             testToolStripMenuItem.Text = "Test";
@@ -107,8 +108,14 @@
             // 
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(136, 22);
+            runToolStripMenuItem.Size = new Size(167, 22);
             runToolStripMenuItem.Text = "Run";
+            // 
+            // parameterToolStripMenuItem
+            // 
+            parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
+            parameterToolStripMenuItem.Size = new Size(167, 22);
+            parameterToolStripMenuItem.Text = "Parameter Simple";
             // 
             // statusStrip1
             // 
@@ -175,9 +182,9 @@
             // txtLog
             // 
             txtLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtLog.Location = new Point(7, 422);
+            txtLog.Location = new Point(7, 409);
             txtLog.Name = "txtLog";
-            txtLog.Size = new Size(191, 167);
+            txtLog.Size = new Size(191, 180);
             txtLog.TabIndex = 2;
             txtLog.Text = "";
             // 
@@ -193,19 +200,21 @@
             groupBox2.Controls.Add(label5);
             groupBox2.Location = new Point(6, 200);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(196, 216);
+            groupBox2.Size = new Size(196, 203);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Communication";
             // 
             // btnReload
             // 
+            btnReload.BackgroundImage = Properties.Resources._refresh_32;
+            btnReload.BackgroundImageLayout = ImageLayout.Zoom;
             btnReload.Location = new Point(6, 174);
             btnReload.Name = "btnReload";
             btnReload.Size = new Size(25, 23);
             btnReload.TabIndex = 3;
-            btnReload.Text = "R";
             btnReload.UseVisualStyleBackColor = true;
+            btnReload.Click += btnReload_Click;
             // 
             // btnConnect
             // 
@@ -216,6 +225,7 @@
             btnConnect.TabIndex = 4;
             btnConnect.Text = "Connect";
             btnConnect.UseVisualStyleBackColor = true;
+            btnConnect.Click += btnConnect_Click;
             // 
             // comBaudRate
             // 
@@ -335,6 +345,7 @@
             pictureBox.Location = new Point(12, 50);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(879, 536);
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
             // 
@@ -364,6 +375,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Main";
             WindowState = FormWindowState.Maximized;
+            FormClosing += Main_FormClosing;
             Load += Main_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -413,5 +425,6 @@
         private Label lbAmp;
         private RichTextBox txtLog;
         private Label lbDateTime;
+        private ToolStripMenuItem parameterToolStripMenuItem;
     }
 }

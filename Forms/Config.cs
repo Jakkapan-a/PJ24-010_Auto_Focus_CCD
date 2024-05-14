@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PJ24_010__Auto_Focus_CCD.Forms
+namespace PJ24_010_Auto_Focus_CCD.Forms
 {
     public partial class Config : Form
     {
