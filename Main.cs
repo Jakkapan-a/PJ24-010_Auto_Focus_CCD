@@ -6,5 +6,10 @@ namespace PJ24_010__Auto_Focus_CCD
         {
             InitializeComponent();
         }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
