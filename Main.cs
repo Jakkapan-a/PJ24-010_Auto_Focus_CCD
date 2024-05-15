@@ -79,7 +79,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 return;
             }
             await capture.StartAsync(deviceSelect);
-            
+            capture.FrameRate = 10;
             // Connect serial port
 
             btnConnect.Text = "Disconnect";
