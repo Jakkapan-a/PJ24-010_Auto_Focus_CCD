@@ -66,6 +66,8 @@ namespace PJ24_010_Auto_Focus_CCD
                 return;
             }
 
+            
+
             btnConnect.Text = "Connecting...";
             this.pictureBox.Image?.Dispose();
             this.pictureBox.Image = null;
@@ -83,6 +85,7 @@ namespace PJ24_010_Auto_Focus_CCD
             await capture.StartAsync(deviceSelect);
             capture.FrameRate = 10;
             // Connect serial port
+           
             SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString()));
             btnConnect.Text = "Disconnect";
             btnConnect.Enabled = true;

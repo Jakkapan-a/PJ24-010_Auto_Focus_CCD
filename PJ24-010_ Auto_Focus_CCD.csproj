@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="DirectShowLib.Standard" Version="2.1.0" />
     <PackageReference Include="Emgu.CV" Version="4.9.0.5494" />
     <PackageReference Include="Emgu.CV.Bitmap" Version="4.9.0.5494" />
@@ -19,6 +20,7 @@
     <PackageReference Include="OpenCvSharp4.Extensions" Version="4.9.0.20240103" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.9.0.20240103" />
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.9.0.20240103" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
   </ItemGroup>
 
@@ -38,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SQLite\" />
+    <Folder Include="Database\" />
   </ItemGroup>
 
 </Project>
