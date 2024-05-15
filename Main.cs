@@ -49,46 +49,82 @@ namespace PJ24_010_Auto_Focus_CCD
                 comboBox.SelectedIndex = selectLast ? comboBox.Items.Count - 1 : 0;
             }
         }
-
+        private bool is_connect = false;
         private async void btnConnect_Click(object sender, EventArgs e)
         {
-            btnConnect.Enabled = false;
-            if (capture.IsRunning)
+            try
             {
-                btnConnect.Text = "Stopping...";
-                await capture.StopAsync();
+                is_connect = !is_connect;
+                btnConnect.Enabled = false;
+                if (is_connect)
+                {
+                    // Connect camera
+                    if (capture.IsRunning)
+                    {
+                        btnConnect.Text = "Stopping...";
+                        await capture.StopAsync();
 
-                this.pictureBox.Image?.Dispose();
-                this.pictureBox.Image = null;
+                        this.pictureBox.Image?.Dispose();
+                        this.pictureBox.Image = null;
+                        DisconnectSerial();
+                    }
+
+                    btnConnect.Text = "Connecting...";
+                    this.pictureBox.Image?.Dispose();
+                    this.pictureBox.Image = null;
+                    this.pictureBox.Image = Properties.Resources.loading_1;
+                    int deviceSelect = comDevice.SelectedIndex;
+                    if (deviceSelect == -1)
+                    {
+                        btnConnect.Text = "Connect";
+                        throw new Exception("Please select a video device.");
+                    }
+                    // Connect camera
+                    await capture.StartAsync(deviceSelect);
+
+                    // Connect serial port
+                    SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString()));
+
+                }
+                else
+                {
+                    // Disconnect
+                    if (capture.IsRunning)
+                    {
+                        btnConnect.Text = "Stopping...";
+                        await capture.StopAsync();
+                        this.pictureBox.Image?.Dispose();
+                        this.pictureBox.Image = null;
+                    }
+
+                    DisconnectSerial();
+                }
+            }
+            catch
+            {
+                is_connect = false;
                 DisconnectSerial();
-                btnConnect.Text = "Connect";
-                btnConnect.Enabled = true;
-                return;
+                if (capture.IsRunning)
+                {
+                    await capture.StopAsync();
+                    this.pictureBox.Image?.Dispose();
+                    this.pictureBox.Image = null;
+                }
             }
-
-            
-
-            btnConnect.Text = "Connecting...";
-            this.pictureBox.Image?.Dispose();
-            this.pictureBox.Image = null;
-            this.pictureBox.Image = Properties.Resources.loading_1;
-
-            await Task.Delay(1000);
-
-            int deviceSelect = comDevice.SelectedIndex;
-            if (deviceSelect == -1)
+            finally
             {
-                MessageBox.Show("Please select a video device.");
-                btnConnect.Text = "Connect";
-                return;
+                btnConnect.Enabled = true;
+                if (capture.IsRunning && serialPort.IsOpen)
+                {
+                    btnConnect.Text = "Disconnect";
+                    is_connect = true;
+                }
+                else
+                {
+                    btnConnect.Text = "Connect";
+                    is_connect = false;
+                }
             }
-            await capture.StartAsync(deviceSelect);
-            capture.FrameRate = 10;
-            // Connect serial port
-           
-            SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString()));
-            btnConnect.Text = "Disconnect";
-            btnConnect.Enabled = true;
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)

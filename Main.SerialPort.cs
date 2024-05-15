@@ -44,7 +44,6 @@ namespace PJ24_010_Auto_Focus_CCD
                 this.serialPort.Read(bytes, 0, bytes.Length);
 
                 // Logging the ASCII representation
-                //Debug.Write("Ascii: ");
                 foreach (byte b in bytes) // Make sure it's 'bytes' not 'bytes1'
                 {
                     // For debugging, write the actual bytes being read to the console/output.
@@ -119,6 +118,16 @@ namespace PJ24_010_Auto_Focus_CCD
             if (input.Contains("RECEIVED"))
             {
                 serialDataStatus = SerialStatus.Received;
+            }
+            else if (input.Contains("SENSOR:"))
+            {
+                if (input.Contains("ON"))
+                {
+                    Debug.WriteLine("SN:ON");
+                }else if (input.Contains("OFF"))
+                {
+                    Debug.WriteLine("SN:OFF");
+                }
             }
         }
         private void SerialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
