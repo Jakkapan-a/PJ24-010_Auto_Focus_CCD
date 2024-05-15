@@ -179,25 +179,49 @@ void parseData(String dataInput) {
   } else if (dataInput.indexOf("RAY:") != -1) {
     String serialData = extractData(dataInput, "RAY:");
     if (serialData.indexOf("RST") != -1) {
-        RELAY1_NOT.off();
-        RELAY2_PVM.off();
-        RELAY3_PVM.off();
+      RELAY1_NOT.off();
+      RELAY2_PVM.off();
+      RELAY3_PVM.off();
     } else if (serialData.indexOf("NOT1") != -1) {
-        RELAY1_NOT.on();
-        RELAY2_PVM.off();
-        RELAY3_PVM.off();
+      RELAY1_NOT.on();
+      RELAY2_PVM.off();
+      RELAY3_PVM.off();
     } else if (serialData.indexOf("NOT0") != -1) {
-        RELAY1_NOT.off();
-        RELAY2_PVM.off();
-        RELAY3_PVM.off();
+      RELAY1_NOT.off();
+      RELAY2_PVM.off();
+      RELAY3_PVM.off();
     } else if (serialData.indexOf("PVM1") != -1) {
-        RELAY1_NOT.off();
-        RELAY2_PVM.on();
-        RELAY3_PVM.off();
-    }else if (serialData.indexOf("PVM0") != -1) {
-        RELAY1_NOT.off();
-        RELAY2_PVM.off();
-        RELAY3_PVM.off();
+      RELAY1_NOT.off();
+      RELAY2_PVM.on();
+      RELAY3_PVM.off();
+    } else if (serialData.indexOf("PVM0") != -1) {
+      RELAY1_NOT.off();
+      RELAY2_PVM.off();
+      RELAY3_PVM.off();
+    }else{
+      RELAY1_NOT.off();
+      RELAY2_PVM.off();
+      RELAY3_PVM.off();
+    }
+  } else if (dataInput.indexOf("LED:") != -1) {
+    String serialData = extractData(dataInput, "LED:");
+
+    if (serialData.indexOf("R") != -1) {
+      LED_RED.on();
+      LED_GREEN.off();
+      LED_BLUE.off();
+    } else if (serialData.indexOf("G") != -1) {
+      LED_RED.off();
+      LED_GREEN.on();
+      LED_BLUE.off();
+    } else if (serialData.indexOf("B") != -1) {
+      LED_RED.off();
+      LED_GREEN.off();
+      LED_BLUE.on();
+    } else {
+      LED_RED.off();
+      LED_GREEN.off();
+      LED_BLUE.off();
     }
   }
 }
