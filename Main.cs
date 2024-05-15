@@ -10,6 +10,7 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             InitializeComponent();
             InitializeTCapture();
+            InitializeSerialPort();
         }
         public string[] baudList = { "9600", "19200", "38400", "57600", "115200" };
 
@@ -21,7 +22,7 @@ namespace PJ24_010_Auto_Focus_CCD
         private void btnReload_Click(object sender, EventArgs e)
         {
             RefreshVideoDevices();
-            RefreshComboBoxWithList(comBaudRate, this.baudList, true);
+            RefreshComboBoxWithList(comBaudRate, this.baudList, false);
             RefreshComboBoxWithList(comPort, System.IO.Ports.SerialPort.GetPortNames(), true);
         }
 
@@ -52,14 +53,14 @@ namespace PJ24_010_Auto_Focus_CCD
         private async void btnConnect_Click(object sender, EventArgs e)
         {
             btnConnect.Enabled = false;
-            if(capture.IsRunning)
+            if (capture.IsRunning)
             {
                 btnConnect.Text = "Stopping...";
                 await capture.StopAsync();
 
                 this.pictureBox.Image?.Dispose();
                 this.pictureBox.Image = null;
-
+                DisconnectSerial();
                 btnConnect.Text = "Connect";
                 btnConnect.Enabled = true;
                 return;
@@ -70,10 +71,11 @@ namespace PJ24_010_Auto_Focus_CCD
             this.pictureBox.Image = null;
             this.pictureBox.Image = Properties.Resources.loading_1;
 
-             await Task.Delay(1000);
+            await Task.Delay(1000);
 
             int deviceSelect = comDevice.SelectedIndex;
-            if (deviceSelect == -1) {
+            if (deviceSelect == -1)
+            {
                 MessageBox.Show("Please select a video device.");
                 btnConnect.Text = "Connect";
                 return;
@@ -81,7 +83,7 @@ namespace PJ24_010_Auto_Focus_CCD
             await capture.StartAsync(deviceSelect);
             capture.FrameRate = 10;
             // Connect serial port
-
+            SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString()));
             btnConnect.Text = "Disconnect";
             btnConnect.Enabled = true;
         }
@@ -89,6 +91,23 @@ namespace PJ24_010_Auto_Focus_CCD
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             capture?.StopAsync();
+        }
+
+
+        private void txtEmp_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                // Code ....
+            }
+        }
+
+        private void txtQr_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                // Code ....
+            }
         }
     }
 }

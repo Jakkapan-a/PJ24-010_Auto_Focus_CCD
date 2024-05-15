@@ -161,10 +161,11 @@
             // 
             lbVoltage.AutoSize = true;
             lbVoltage.BackColor = Color.White;
+            lbVoltage.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbVoltage.ForeColor = Color.Blue;
-            lbVoltage.Location = new Point(7, 22);
+            lbVoltage.Location = new Point(7, 16);
             lbVoltage.Name = "lbVoltage";
-            lbVoltage.Size = new Size(24, 15);
+            lbVoltage.Size = new Size(30, 20);
             lbVoltage.TabIndex = 4;
             lbVoltage.Text = "--V";
             // 
@@ -172,10 +173,11 @@
             // 
             lbAmp.AutoSize = true;
             lbAmp.BackColor = Color.White;
+            lbAmp.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbAmp.ForeColor = Color.Red;
             lbAmp.Location = new Point(7, 42);
             lbAmp.Name = "lbAmp";
-            lbAmp.Size = new Size(36, 15);
+            lbAmp.Size = new Size(44, 20);
             lbAmp.TabIndex = 2;
             lbAmp.Text = "--mA";
             // 
@@ -301,6 +303,7 @@
             txtQr.Name = "txtQr";
             txtQr.Size = new Size(188, 23);
             txtQr.TabIndex = 1;
+            txtQr.KeyPress += txtQr_KeyPress;
             // 
             // txtEmp
             // 
@@ -309,6 +312,7 @@
             txtEmp.Name = "txtEmp";
             txtEmp.Size = new Size(188, 23);
             txtEmp.TabIndex = 0;
+            txtEmp.KeyPress += txtEmp_KeyPress;
             // 
             // label3
             // 

@@ -10,7 +10,8 @@ namespace PJ24_010_Auto_Focus_CCD
     partial class Main
     {
         private TCapture capture;
-        void InitializeTCapture()
+
+        private void InitializeTCapture()
         {
             capture = new TCapture();
             capture.OnError += Capture_OnError;
@@ -34,6 +35,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
         }
 
+        private Image image = null;
         private void Capture_OnFrameHeader(Bitmap bitmap)
         {
             if (InvokeRequired)
@@ -44,6 +46,9 @@ namespace PJ24_010_Auto_Focus_CCD
 
             pictureBox.Image?.Dispose();
             pictureBox.Image = new Bitmap(bitmap);
+
+            image?.Dispose();
+            image = new Bitmap(bitmap);
         }
     }
 }
