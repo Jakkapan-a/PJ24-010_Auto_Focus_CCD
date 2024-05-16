@@ -119,7 +119,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             return SQLite.SQliteDataAccess.Query<OnnxModel>(sql, parameters);
         }
 
-        internal static bool IsNameExits(string text, int id = -1)
+        internal static bool IsNameExist(string text, int id = -1)
         {
             string sql = "SELECT COUNT(*) FROM onnx_model WHERE name = @name";
             if(id != -1){

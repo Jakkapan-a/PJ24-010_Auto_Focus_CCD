@@ -1,6 +1,7 @@
 using DirectShowLib;
 using PJ24_010_Auto_Focus_CCD.Forms;
 using PJ24_010_Auto_Focus_CCD.SQLite;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -25,12 +26,13 @@ namespace PJ24_010_Auto_Focus_CCD
             Task.Run(() =>
             {
                 OnnxModel.CreateTable();
-
+                Product.CreateTable();
             });
         }
 
         private void btnReload_Click(object sender, EventArgs e)
         {
+            //Debug.WriteLine($"Format ->> {((double)10110/1000):f2}");
             RefreshVideoDevices();
             RefreshComboBoxWithList(comBaudRate, this.baudList, false);
             RefreshComboBoxWithList(comPort, System.IO.Ports.SerialPort.GetPortNames(), true);

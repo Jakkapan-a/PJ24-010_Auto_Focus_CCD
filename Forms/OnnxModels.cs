@@ -154,7 +154,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             {
                 if (btnSave.Text == "Save")
                 {
-                    if (OnnxModel.IsNameExits(txtName.Text))
+                    if (OnnxModel.IsNameExist(txtName.Text))
                     {
                         throw new Exception("Name already exists.");
                     }
@@ -162,7 +162,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                 }
                 else if (btnSave.Text == "Update")
                 {
-                    if (OnnxModel.IsNameExits(txtName.Text, this.id))
+                    if (OnnxModel.IsNameExist(txtName.Text, this.id))
                     {
                         throw new Exception("Name already exists.");
                     }
@@ -417,7 +417,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            if(OnnxModel.IsNameExits(txtName.Text, this.id))
+            if(OnnxModel.IsNameExist(txtName.Text, this.id))
             {
                 txtName.BackColor = Color.Red;
             }

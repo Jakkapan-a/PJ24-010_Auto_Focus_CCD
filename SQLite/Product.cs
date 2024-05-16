@@ -25,7 +25,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         {
             string sql = @"
             CREATE TABLE IF NOT EXISTS product (
-            `id` INTEGER,
+            `id` INTEGER NOT NULL,
             `name` TEXT NOT NULL,
             `type` INTEGER NOT NULL,
             `voltage_min` INTEGER NOT NULL,
@@ -76,6 +76,10 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             SQLite.SQliteDataAccess.Execute(sql, parameters);
         }
 
+        public OnnxModel GetOnnxModel()
+        {
+            return OnnxModel.Get(this.onnx_model_id);
+        }
         public void Update()
         {
             string sql = @"
@@ -149,10 +153,14 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             return SQLite.SQliteDataAccess.Query<Product>(sql, parameters);
          }
 
-         public static bool NameIsExist(string name)
+         public static bool IsNameExist(string name, int id = -1)
          {
             string sql = "SELECT COUNT(*) FROM product WHERE name = @name";
-            Dictionary<string, object> parameters = new Dictionary<string, object> { { "@name", name } };
+            if (id != -1)
+            {
+                sql += " AND id != @id";
+            }
+            Dictionary<string, object> parameters = new Dictionary<string, object> { { "@name", name }, { "@id", id } };
             return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault() > 0;
          }
     }
