@@ -21,7 +21,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         {
             string sql = @"
             CREATE TABLE IF NOT EXISTS onnx_model (
-            `id` INTEGER,
+            `id` INTEGER NOT NULL,
             `name` TEXT NOT NULL,
             `path_model` TEXT NOT NULL,
             `path_label` TEXT NOT NULL,
@@ -108,7 +108,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault();
         }
 
-        public static List<OnnxModel> Search(string name , int start = 0, int limit =100, string order_by = " id desc")
+        public static List<OnnxModel> Search(string name = "" , int start = 0, int limit =100, string order_by = " id desc")
         {
             string sql = "SELECT * FROM onnx_model WHERE name LIKE @name ORDER BY @order_by LIMIT @start, @limit";
             Dictionary<string, object> parameters = new Dictionary<string, object>();

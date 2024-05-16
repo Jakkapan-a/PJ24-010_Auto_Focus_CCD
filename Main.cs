@@ -1,5 +1,6 @@
 using DirectShowLib;
 using PJ24_010_Auto_Focus_CCD.Forms;
+using PJ24_010_Auto_Focus_CCD.SQLite;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -20,6 +21,12 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             this.btnReload.PerformClick();
             timer.Start();
+
+            Task.Run(() =>
+            {
+                OnnxModel.CreateTable();
+
+            });
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -178,6 +185,11 @@ namespace PJ24_010_Auto_Focus_CCD
         private void timer_Tick(object sender, EventArgs e)
         {
             lbDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+        }
+
+        private void modelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -61,6 +61,7 @@
             pictureBox = new PictureBox();
             label1 = new Label();
             timer = new System.Windows.Forms.Timer(components);
+            modelsToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -81,7 +82,7 @@
             // 
             // settingToolStripMenuItem
             // 
-            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oNNXToolStripMenuItem, configurationToolStripMenuItem });
+            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oNNXToolStripMenuItem, modelsToolStripMenuItem, configurationToolStripMenuItem });
             settingToolStripMenuItem.Name = "settingToolStripMenuItem";
             settingToolStripMenuItem.Size = new Size(56, 20);
             settingToolStripMenuItem.Text = "Setting";
@@ -373,6 +374,13 @@
             timer.Interval = 1000;
             timer.Tick += timer_Tick;
             // 
+            // modelsToolStripMenuItem
+            // 
+            modelsToolStripMenuItem.Name = "modelsToolStripMenuItem";
+            modelsToolStripMenuItem.Size = new Size(180, 22);
+            modelsToolStripMenuItem.Text = "Models CCD";
+            modelsToolStripMenuItem.Click += modelsToolStripMenuItem_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -439,5 +447,6 @@
         private Label lbDateTime;
         private ToolStripMenuItem parameterToolStripMenuItem;
         private System.Windows.Forms.Timer timer;
+        private ToolStripMenuItem modelsToolStripMenuItem;
     }
 }

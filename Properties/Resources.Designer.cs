@@ -111,6 +111,15 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ./system/onnx_models.
+        /// </summary>
+        internal static string path_models {
+            get {
+                return ResourceManager.GetString("path_models", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Spinner_1s_800px {
