@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             settingToolStripMenuItem = new ToolStripMenuItem();
             oNNXToolStripMenuItem = new ToolStripMenuItem();
@@ -59,6 +60,7 @@
             panel2 = new Panel();
             pictureBox = new PictureBox();
             label1 = new Label();
+            timer = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -87,14 +89,15 @@
             // oNNXToolStripMenuItem
             // 
             oNNXToolStripMenuItem.Name = "oNNXToolStripMenuItem";
-            oNNXToolStripMenuItem.Size = new Size(159, 22);
+            oNNXToolStripMenuItem.Size = new Size(180, 22);
             oNNXToolStripMenuItem.Text = "ONNX";
+            oNNXToolStripMenuItem.Click += oNNXToolStripMenuItem_Click;
             // 
             // configurationToolStripMenuItem
             // 
             configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            configurationToolStripMenuItem.Size = new Size(159, 22);
+            configurationToolStripMenuItem.Size = new Size(180, 22);
             configurationToolStripMenuItem.Text = "Options";
             // 
             // testToolStripMenuItem
@@ -365,6 +368,11 @@
             label1.Text = "CAMERA";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // timer
+            // 
+            timer.Interval = 1000;
+            timer.Tick += timer_Tick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -430,5 +438,6 @@
         private RichTextBox txtLog;
         private Label lbDateTime;
         private ToolStripMenuItem parameterToolStripMenuItem;
+        private System.Windows.Forms.Timer timer;
     }
 }

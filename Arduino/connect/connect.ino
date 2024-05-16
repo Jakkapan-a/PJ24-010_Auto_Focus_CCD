@@ -242,10 +242,10 @@ String extractData(String dataInput, String key) {
 }
 void sensorEvent(bool state) {
   if (state) {
-    Serial.println("SENSOR:ON");
-    Serial1.println("$SENSOR:ON#");
+    Serial.println("SENSOR1:ON");
+    Serial1.println("$SENSOR1:ON#");
   } else {
-    Serial.println("SENSOR:OFF");
-    Serial1.println("$SENSOR:OFF#");
+    Serial.println("SENSOR1:OFF");
+    Serial1.println("$SENSOR1:OFF#");
   }
 }

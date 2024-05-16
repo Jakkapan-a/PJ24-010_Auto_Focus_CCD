@@ -1,4 +1,5 @@
 using DirectShowLib;
+using PJ24_010_Auto_Focus_CCD.Forms;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -11,12 +12,14 @@ namespace PJ24_010_Auto_Focus_CCD
             InitializeComponent();
             InitializeTCapture();
             InitializeSerialPort();
+            InitializeProcess();
         }
         public string[] baudList = { "9600", "19200", "38400", "57600", "115200" };
 
         private void Main_Load(object sender, EventArgs e)
         {
             this.btnReload.PerformClick();
+            timer.Start();
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -137,7 +140,14 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
+                if (string.IsNullOrEmpty(txtEmp.Text))
+                {
+                    MessageBox.Show("Please enter employee.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 // Code ....
+                this.ActiveControl = txtQr;
+                this.txtQr.Focus();
             }
         }
 
@@ -145,8 +155,29 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
+                if (string.IsNullOrEmpty(txtQr.Text))
+                {
+                    MessageBox.Show("Please enter QR code.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 // Code ....
+
+                Process();
             }
+        }
+        private OnnxModels onnxModels;
+        private void oNNXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            onnxModels?.Dispose();
+
+            onnxModels = new OnnxModels();
+
+            onnxModels.ShowDialog();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            lbDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
     }
 }

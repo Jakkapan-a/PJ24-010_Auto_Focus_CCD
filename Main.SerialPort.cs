@@ -119,7 +119,7 @@ namespace PJ24_010_Auto_Focus_CCD
             {
                 serialDataStatus = SerialStatus.Received;
             }
-            else if (input.Contains("SENSOR:"))
+            else if (input.Contains("SENSOR1:"))
             {
                 if (input.Contains("ON"))
                 {
