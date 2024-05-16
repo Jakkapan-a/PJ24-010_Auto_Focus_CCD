@@ -187,9 +187,14 @@ namespace PJ24_010_Auto_Focus_CCD
             lbDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
 
+        private Products products;
         private void modelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            products?.Dispose();
 
+            products = new Products();
+
+            products.ShowDialog();
         }
     }
 }

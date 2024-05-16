@@ -16,5 +16,10 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
         {
             InitializeComponent();
         }
+
+        private void Products_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

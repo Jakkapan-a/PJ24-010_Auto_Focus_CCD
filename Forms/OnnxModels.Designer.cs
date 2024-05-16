@@ -191,6 +191,7 @@
             txtName.ReadOnly = true;
             txtName.Size = new Size(996, 23);
             txtName.TabIndex = 1;
+            txtName.TextChanged += txtName_TextChanged;
             // 
             // label3
             // 
