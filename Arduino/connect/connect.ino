@@ -158,6 +158,7 @@ void manageSerial1() {
 
 void parseData(String dataInput) {
   dataInput.trim();
+  
   if (dataInput.indexOf("CONN:") != -1) {
     // Send dataInput to MES
     // String extract = extractdataInput(dataInput, "STATUS_SERVER:");
@@ -176,6 +177,12 @@ void parseData(String dataInput) {
 
     buzzerPass.setTime(200);
     buzzerPass.total += 1;
+  } else if (dataInput.indexOf("CMD:") != -1) {
+     String serialData = extractData(dataInput, "CMD:");
+    Serial1.print("$");
+    Serial1.print(serialData);
+    Serial1.println("#");
+    
   } else if (dataInput.indexOf("RAY:") != -1) {
     String serialData = extractData(dataInput, "RAY:");
     if (serialData.indexOf("RST") != -1) {
@@ -198,7 +205,7 @@ void parseData(String dataInput) {
       RELAY1_NOT.off();
       RELAY2_PVM.off();
       RELAY3_PVM.off();
-    }else{
+    } else {
       RELAY1_NOT.off();
       RELAY2_PVM.off();
       RELAY3_PVM.off();

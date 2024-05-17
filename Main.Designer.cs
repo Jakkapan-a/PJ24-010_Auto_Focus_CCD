@@ -32,6 +32,7 @@
             menuStrip1 = new MenuStrip();
             settingToolStripMenuItem = new ToolStripMenuItem();
             oNNXToolStripMenuItem = new ToolStripMenuItem();
+            modelsToolStripMenuItem = new ToolStripMenuItem();
             configurationToolStripMenuItem = new ToolStripMenuItem();
             testToolStripMenuItem = new ToolStripMenuItem();
             runToolStripMenuItem = new ToolStripMenuItem();
@@ -59,9 +60,8 @@
             label2 = new Label();
             panel2 = new Panel();
             pictureBox = new PictureBox();
-            label1 = new Label();
+            lbTitle = new Label();
             timer = new System.Windows.Forms.Timer(components);
-            modelsToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -90,15 +90,22 @@
             // oNNXToolStripMenuItem
             // 
             oNNXToolStripMenuItem.Name = "oNNXToolStripMenuItem";
-            oNNXToolStripMenuItem.Size = new Size(180, 22);
+            oNNXToolStripMenuItem.Size = new Size(159, 22);
             oNNXToolStripMenuItem.Text = "ONNX";
             oNNXToolStripMenuItem.Click += oNNXToolStripMenuItem_Click;
+            // 
+            // modelsToolStripMenuItem
+            // 
+            modelsToolStripMenuItem.Name = "modelsToolStripMenuItem";
+            modelsToolStripMenuItem.Size = new Size(159, 22);
+            modelsToolStripMenuItem.Text = "Models CCD";
+            modelsToolStripMenuItem.Click += modelsToolStripMenuItem_Click;
             // 
             // configurationToolStripMenuItem
             // 
             configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            configurationToolStripMenuItem.Size = new Size(180, 22);
+            configurationToolStripMenuItem.Size = new Size(159, 22);
             configurationToolStripMenuItem.Text = "Options";
             // 
             // testToolStripMenuItem
@@ -339,7 +346,7 @@
             // panel2
             // 
             panel2.Controls.Add(pictureBox);
-            panel2.Controls.Add(label1);
+            panel2.Controls.Add(lbTitle);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 24);
             panel2.Name = "panel2";
@@ -357,29 +364,22 @@
             pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
             // 
-            // label1
+            // lbTitle
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label1.BackColor = Color.Yellow;
-            label1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 3);
-            label1.Name = "label1";
-            label1.Size = new Size(879, 44);
-            label1.TabIndex = 0;
-            label1.Text = "CAMERA";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            lbTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lbTitle.BackColor = Color.Yellow;
+            lbTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbTitle.Location = new Point(12, 3);
+            lbTitle.Name = "lbTitle";
+            lbTitle.Size = new Size(879, 44);
+            lbTitle.TabIndex = 0;
+            lbTitle.Text = "CAMERA";
+            lbTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // timer
             // 
             timer.Interval = 1000;
             timer.Tick += timer_Tick;
-            // 
-            // modelsToolStripMenuItem
-            // 
-            modelsToolStripMenuItem.Name = "modelsToolStripMenuItem";
-            modelsToolStripMenuItem.Size = new Size(180, 22);
-            modelsToolStripMenuItem.Text = "Models CCD";
-            modelsToolStripMenuItem.Click += modelsToolStripMenuItem_Click;
             // 
             // Main
             // 
@@ -425,7 +425,7 @@
         private GroupBox groupBox1;
         private ToolStripMenuItem oNNXToolStripMenuItem;
         private ToolStripMenuItem runToolStripMenuItem;
-        private Label label1;
+        private Label lbTitle;
         private PictureBox pictureBox;
         private Label label3;
         private Label label2;

@@ -124,9 +124,12 @@ namespace PJ24_010_Auto_Focus_CCD
                 if (input.Contains("ON"))
                 {
                     Debug.WriteLine("SN:ON");
-                }else if (input.Contains("OFF"))
+                    StartProcess();
+                }
+                else if (input.Contains("OFF"))
                 {
                     Debug.WriteLine("SN:OFF");
+                    StopProcess();
                 }
             }
         }

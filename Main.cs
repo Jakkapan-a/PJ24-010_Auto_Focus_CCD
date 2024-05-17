@@ -164,14 +164,13 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (string.IsNullOrEmpty(txtQr.Text))
+                if (string.IsNullOrEmpty(txtQr.Text) || txtQr.Text.Length < 7)
                 {
                     MessageBox.Show("Please enter QR code.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 // Code ....
-
-                Process();
+                ProcessValiidateData();
             }
         }
         private OnnxModels onnxModels;

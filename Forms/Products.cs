@@ -67,6 +67,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             int no = (currentPage - 1) * pageSize;
             foreach (Product product in products)
             {
+                if(product == null) continue;
                 no++;
                 dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM" : "NONE", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.amp_min / 1000:f2}", $"{(double)product.amp_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
             }
@@ -175,15 +176,18 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                     }
 
                     // Update
-                    Product product = Product.Get(id);
-                    product.name = txtName.Text;
-                    product.type = cbType.SelectedIndex;
-                    product.voltage_min = Convert.ToInt32(txtMinVoltage.Value * 1000);
-                    product.voltage_max = Convert.ToInt32(txtMaxVoltage.Value * 1000);
-                    product.amp_min = Convert.ToInt32(txtMinAmp.Value * 1000);
-                    product.amp_max = Convert.ToInt32(txtMaxAmp.Value * 1000);
-                    product.onnx_model_id = onnx_id;
-                    product.Update();
+                    Product? product = Product.Get(id);
+                    if(product != null)
+                    {
+                        product.name = txtName.Text;
+                        product.type = cbType.SelectedIndex;
+                        product.voltage_min = Convert.ToInt32(txtMinVoltage.Value * 1000);
+                        product.voltage_max = Convert.ToInt32(txtMaxVoltage.Value * 1000);
+                        product.amp_min = Convert.ToInt32(txtMinAmp.Value * 1000);
+                        product.amp_max = Convert.ToInt32(txtMaxAmp.Value * 1000);
+                        product.onnx_model_id = onnx_id;
+                        product.Update();
+                    }
 
                     MessageBox.Show("Updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
