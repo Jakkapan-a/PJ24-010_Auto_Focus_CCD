@@ -83,6 +83,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 }
             });
         }
+        
         private void ExtractAndProcessMessage()
         {
             var dataStringList = _dataBufferString.ToList();
@@ -132,7 +133,10 @@ namespace PJ24_010_Auto_Focus_CCD
                     StopProcess();
                 }
             }
+
+            serialDataStatus = SerialStatus.Received;
         }
+        
         private void SerialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
 
@@ -194,6 +198,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 serialDataQueue.Enqueue(data);
             }
             dataReadySignal.Set(); // Signal that there's data to process
+
             if (taskSendDataBuffer != null && !taskSendDataBuffer.IsCompleted)
             {
                 return;
@@ -222,6 +227,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
                         // Check if data is empty
                         if(string.IsNullOrEmpty(dataToSend)) continue;
+                        serialDataStatus = SerialStatus.Sent;
                         int count = 0;
                         while (serialDataStatus != SerialStatus.Received && !cts.Token.IsCancellationRequested)
                         {

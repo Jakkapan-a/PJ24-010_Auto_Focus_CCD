@@ -41,7 +41,17 @@ namespace PJ24_010_Auto_Focus_CCD
                 this.product = _product;
                 processStatus = ProcessStatus.ready;
                 this.txtQr.ReadOnly = true;
-                this.lbTitle.Text = _product.name + " - Waiting for Test";    
+                this.lbTitle.Text = _product.name + " - Waiting for Test";
+
+                if (_product.onnx_model_id != onnx_model_id)
+                {
+                    // Load model
+
+
+                }
+                this.txtQr.ReadOnly = false;
+                this.ActiveControl = this.txtQr;
+                this.txtQr.Focus();
             }
             else
             {
@@ -62,6 +72,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 return;
             }
             // code...
+
 
             // Pass
             this.lbTitle.Text = "PASS - " + product?.name;

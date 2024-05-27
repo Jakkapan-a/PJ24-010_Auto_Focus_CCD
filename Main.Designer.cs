@@ -37,6 +37,7 @@
             testToolStripMenuItem = new ToolStripMenuItem();
             runToolStripMenuItem = new ToolStripMenuItem();
             parameterToolStripMenuItem = new ToolStripMenuItem();
+            clearMESToolStripMenuItem1 = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripProgressBar1 = new ToolStripProgressBar();
             panel1 = new Panel();
@@ -62,6 +63,8 @@
             pictureBox = new PictureBox();
             lbTitle = new Label();
             timer = new System.Windows.Forms.Timer(components);
+            contextMenuStrip = new ContextMenuStrip(components);
+            clearMESToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -69,6 +72,7 @@
             groupBox1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+            contextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -107,10 +111,11 @@
             configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
             configurationToolStripMenuItem.Size = new Size(159, 22);
             configurationToolStripMenuItem.Text = "Options";
+            configurationToolStripMenuItem.Click += configurationToolStripMenuItem_Click;
             // 
             // testToolStripMenuItem
             // 
-            testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { runToolStripMenuItem, parameterToolStripMenuItem });
+            testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { runToolStripMenuItem, parameterToolStripMenuItem, clearMESToolStripMenuItem1 });
             testToolStripMenuItem.Name = "testToolStripMenuItem";
             testToolStripMenuItem.Size = new Size(39, 20);
             testToolStripMenuItem.Text = "Test";
@@ -119,14 +124,21 @@
             // 
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(167, 22);
+            runToolStripMenuItem.Size = new Size(180, 22);
             runToolStripMenuItem.Text = "Run";
             // 
             // parameterToolStripMenuItem
             // 
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
-            parameterToolStripMenuItem.Size = new Size(167, 22);
+            parameterToolStripMenuItem.Size = new Size(180, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
+            // 
+            // clearMESToolStripMenuItem1
+            // 
+            clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
+            clearMESToolStripMenuItem1.Size = new Size(180, 22);
+            clearMESToolStripMenuItem1.Text = "Clear MES";
+            clearMESToolStripMenuItem1.Click += clearMESToolStripMenuItem1_Click;
             // 
             // statusStrip1
             // 
@@ -381,6 +393,18 @@
             timer.Interval = 1000;
             timer.Tick += timer_Tick;
             // 
+            // contextMenuStrip
+            // 
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { clearMESToolStripMenuItem });
+            contextMenuStrip.Name = "contextMenuStrip";
+            contextMenuStrip.Size = new Size(128, 26);
+            // 
+            // clearMESToolStripMenuItem
+            // 
+            clearMESToolStripMenuItem.Name = "clearMESToolStripMenuItem";
+            clearMESToolStripMenuItem.Size = new Size(127, 22);
+            clearMESToolStripMenuItem.Text = "Clear MES";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -409,6 +433,7 @@
             groupBox1.PerformLayout();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+            contextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -448,5 +473,8 @@
         private ToolStripMenuItem parameterToolStripMenuItem;
         private System.Windows.Forms.Timer timer;
         private ToolStripMenuItem modelsToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip;
+        private ToolStripMenuItem clearMESToolStripMenuItem;
+        private ToolStripMenuItem clearMESToolStripMenuItem1;
     }
 }

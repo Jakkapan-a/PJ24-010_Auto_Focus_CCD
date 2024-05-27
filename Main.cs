@@ -197,5 +197,22 @@ namespace PJ24_010_Auto_Focus_CCD
 
             products.ShowDialog();
         }
+
+        private Options options;
+        private void configurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            options?.Dispose();
+            options = new Options();
+            options.ShowDialog();
+        }
+
+        private async void clearMESToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            clearMESToolStripMenuItem1.Enabled = false;
+            SendDataBuffer($"KBD:{Properties.Settings.Default.ClearMessage}");
+            await Task.Delay(Properties.Settings.Default.ClearDelay);
+            SendDataBuffer($"KBD:{txtEmp.Text}");
+            clearMESToolStripMenuItem1.Enabled = true;
+        }
     }
 }

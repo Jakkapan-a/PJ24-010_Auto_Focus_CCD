@@ -22,5 +22,77 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsAllowSendData {
+            get {
+                return ((bool)(this["IsAllowSendData"]));
+            }
+            set {
+                this["IsAllowSendData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("006D")]
+        public string KeyNG {
+            get {
+                return ((string)(this["KeyNG"]));
+            }
+            set {
+                this["KeyNG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int KeyNGDelay {
+            get {
+                return ((int)(this["KeyNGDelay"]));
+            }
+            set {
+                this["KeyNGDelay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("รูปลักษณ์ภายนอก NG")]
+        public string KeyNGDescription {
+            get {
+                return ((string)(this["KeyNGDescription"]));
+            }
+            set {
+                this["KeyNGDescription"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("clear")]
+        public string ClearMessage {
+            get {
+                return ((string)(this["ClearMessage"]));
+            }
+            set {
+                this["ClearMessage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int ClearDelay {
+            get {
+                return ((int)(this["ClearDelay"]));
+            }
+            set {
+                this["ClearDelay"] = value;
+            }
+        }
     }
 }
