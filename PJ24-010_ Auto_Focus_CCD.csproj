@@ -22,7 +22,7 @@
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.9.0.20240103" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
-    <PackageReference Include="YoloV8" Version="4.1.5" />
+    <PackageReference Include="YamlDotNet" Version="15.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +47,12 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Yolo.Net">
+      <HintPath>..\..\..\MiniAOI CHUD\Yolov8.Net-1.0.3\src\Yolov8net\bin\Debug\net6.0\Yolo.Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

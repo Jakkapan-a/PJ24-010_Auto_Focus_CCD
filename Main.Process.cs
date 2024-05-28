@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using YamlDotNet.Serialization;
+using Yolonet;
 
 namespace PJ24_010_Auto_Focus_CCD
 {
@@ -15,6 +17,7 @@ namespace PJ24_010_Auto_Focus_CCD
         private Product? product;
 
         private System.Windows.Forms.Timer timerCountStart = new System.Windows.Forms.Timer();
+
         private void InitializeProcess()
         {
             timerCountStart?.Dispose();
@@ -52,6 +55,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 processStatus = ProcessStatus.wait_start;
                 this.txtQr.ReadOnly = true;
                 this.lbTitle.Text = _product.name + " - Wait Testing";
+                this.lbTitle.ForeColor = Color.Yellow;
 
                 if (_product.onnx_model_id != onnx_model_id)
                 {
@@ -71,7 +75,10 @@ namespace PJ24_010_Auto_Focus_CCD
             {
                 product = null;
                 processStatus = ProcessStatus.none;
-                MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.lbTitle.Text = "QR Code Invalid, Please scan again";
+                this.lbTitle.ForeColor = Color.Orange;
+                // ------------------- Reset ------------------- //
                 this.txtQr.Text = "";
                 this.ActiveControl = this.txtQr;
                 this.txtQr.Focus();
@@ -82,13 +89,17 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             if(processStatus == ProcessStatus.none)
             {
-                MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                lbTitle.Text = "QR Code Invalid, Please scan again";
+                lbTitle.ForeColor = Color.Orange;
                 return;
             }
 
             if (processStatus != ProcessStatus.wait_start)
             {
-                MessageBox.Show("Invalid Process, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Invalid Process, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.lbTitle.Text = "QR Code Invalid, Please scan again";
+                this.lbTitle.ForeColor = Color.Orange;
                 return;
             }
             // Code...
@@ -124,6 +135,13 @@ namespace PJ24_010_Auto_Focus_CCD
 
                 // Validate
             });
+            if(processStatus == ProcessStatus.error)
+            {
+                this.lbTitle.Text = "ERROR - " + product?.name;
+                this.lbTitle.ForeColor = Color.White;
+                this.lbTitle.BackColor = Color.Red;
+                return;
+            }
             // Pass
             this.lbTitle.Text = "PASS - " + product?.name;
             this.lbTitle.ForeColor = Color.White;
@@ -137,25 +155,17 @@ namespace PJ24_010_Auto_Focus_CCD
             {
                 timerCountStart.Stop();
                 processStatus = ProcessStatus.wait_start;
+                this.lbTitle.Text = _product?.name + " - Wait Testing";
+                this.lbTitle.ForeColor = Color.Yellow;
                 return;
             }
-            //if (processStatus != ProcessStatus.pass)
-            //{
-            //    return;
-            //}
-
-            //if (processStatus != ProcessStatus.fail)
-            //{
-            //    return
-            //}
-            // code...
-             // Title
+            
+            // Title
             this.lbTitle.Text = "Ready";
             this.lbTitle.ForeColor = Color.Black;
             this.lbTitle.BackColor = Color.Yellow;
 
-
-             // End Process
+            // End Process 
             this.txtQr.Text = "";
             this.ActiveControl = this.txtQr;
             this.txtQr.Focus();
@@ -186,9 +196,9 @@ namespace PJ24_010_Auto_Focus_CCD
                 TestProcess();
             }
         }
-    }
 
-    
+
+    }
 
     public enum ProcessStatus
     {
