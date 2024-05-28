@@ -21,6 +21,7 @@ namespace PJ24_010_Auto_Focus_CCD
         private void Main_Load(object sender, EventArgs e)
         {
             this.btnReload.PerformClick();
+            timer.Tick += TimerOnSecond_Tick;
             timer.Start();
 
             Task.Run(() =>
@@ -32,7 +33,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            //Debug.WriteLine($"Format ->> {((double)10110/1000):f2}");
+            // Debug.WriteLine($"Format ->> {((double)10110/1000):f2}");
             RefreshVideoDevices();
             RefreshComboBoxWithList(comBaudRate, this.baudList, false);
             RefreshComboBoxWithList(comPort, System.IO.Ports.SerialPort.GetPortNames(), true);
@@ -170,7 +171,7 @@ namespace PJ24_010_Auto_Focus_CCD
                     return;
                 }
                 // Code ....
-                ProcessValiidateData();
+                ProcessValidatedData();
             }
         }
         private OnnxModels onnxModels;

@@ -43,7 +43,7 @@
             panel1 = new Panel();
             lbDateTime = new Label();
             lbVoltage = new Label();
-            lbAmp = new Label();
+            lbCurrent = new Label();
             txtLog = new RichTextBox();
             groupBox2 = new GroupBox();
             btnReload = new Button();
@@ -80,7 +80,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { settingToolStripMenuItem, testToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1104, 24);
+            menuStrip1.Size = new Size(1209, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -124,28 +124,28 @@
             // 
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(180, 22);
+            runToolStripMenuItem.Size = new Size(167, 22);
             runToolStripMenuItem.Text = "Run";
             // 
             // parameterToolStripMenuItem
             // 
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
-            parameterToolStripMenuItem.Size = new Size(180, 22);
+            parameterToolStripMenuItem.Size = new Size(167, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
             // 
             // clearMESToolStripMenuItem1
             // 
             clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
-            clearMESToolStripMenuItem1.Size = new Size(180, 22);
+            clearMESToolStripMenuItem1.Size = new Size(167, 22);
             clearMESToolStripMenuItem1.Text = "Clear MES";
             clearMESToolStripMenuItem1.Click += clearMESToolStripMenuItem1_Click;
             // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripProgressBar1 });
-            statusStrip1.Location = new Point(0, 613);
+            statusStrip1.Location = new Point(0, 732);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1104, 22);
+            statusStrip1.Size = new Size(1209, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -158,14 +158,14 @@
             // 
             panel1.Controls.Add(lbDateTime);
             panel1.Controls.Add(lbVoltage);
-            panel1.Controls.Add(lbAmp);
+            panel1.Controls.Add(lbCurrent);
             panel1.Controls.Add(txtLog);
             panel1.Controls.Add(groupBox2);
             panel1.Controls.Add(groupBox1);
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(897, 24);
+            panel1.Location = new Point(1002, 24);
             panel1.Name = "panel1";
-            panel1.Size = new Size(207, 589);
+            panel1.Size = new Size(207, 708);
             panel1.TabIndex = 2;
             // 
             // lbDateTime
@@ -192,24 +192,24 @@
             lbVoltage.TabIndex = 4;
             lbVoltage.Text = "--V";
             // 
-            // lbAmp
+            // lbCurrent
             // 
-            lbAmp.AutoSize = true;
-            lbAmp.BackColor = Color.White;
-            lbAmp.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lbAmp.ForeColor = Color.Red;
-            lbAmp.Location = new Point(7, 42);
-            lbAmp.Name = "lbAmp";
-            lbAmp.Size = new Size(44, 20);
-            lbAmp.TabIndex = 2;
-            lbAmp.Text = "--mA";
+            lbCurrent.AutoSize = true;
+            lbCurrent.BackColor = Color.White;
+            lbCurrent.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lbCurrent.ForeColor = Color.Red;
+            lbCurrent.Location = new Point(7, 42);
+            lbCurrent.Name = "lbCurrent";
+            lbCurrent.Size = new Size(44, 20);
+            lbCurrent.TabIndex = 2;
+            lbCurrent.Text = "--mA";
             // 
             // txtLog
             // 
             txtLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtLog.Location = new Point(7, 409);
             txtLog.Name = "txtLog";
-            txtLog.Size = new Size(191, 180);
+            txtLog.Size = new Size(191, 299);
             txtLog.TabIndex = 2;
             txtLog.Text = "";
             // 
@@ -362,7 +362,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 24);
             panel2.Name = "panel2";
-            panel2.Size = new Size(897, 589);
+            panel2.Size = new Size(1002, 708);
             panel2.TabIndex = 3;
             // 
             // pictureBox
@@ -371,7 +371,7 @@
             pictureBox.BackColor = Color.Black;
             pictureBox.Location = new Point(12, 50);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(879, 536);
+            pictureBox.Size = new Size(984, 655);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
@@ -383,7 +383,7 @@
             lbTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbTitle.Location = new Point(12, 3);
             lbTitle.Name = "lbTitle";
-            lbTitle.Size = new Size(879, 44);
+            lbTitle.Size = new Size(984, 44);
             lbTitle.TabIndex = 0;
             lbTitle.Text = "CAMERA";
             lbTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -409,7 +409,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1104, 635);
+            ClientSize = new Size(1209, 754);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(statusStrip1);
@@ -467,7 +467,7 @@
         private ComboBox comDevice;
         private Label label6;
         private Label lbVoltage;
-        private Label lbAmp;
+        private Label lbCurrent;
         private RichTextBox txtLog;
         private Label lbDateTime;
         private ToolStripMenuItem parameterToolStripMenuItem;

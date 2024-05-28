@@ -47,8 +47,12 @@ namespace PJ24_010_Auto_Focus_CCD
             pictureBox.Image?.Dispose();
             pictureBox.Image = new Bitmap(bitmap);
 
-            image?.Dispose();
-            image = new Bitmap(bitmap);
+            if (!isClone)
+            {
+                image?.Dispose();
+                image = new Bitmap(bitmap);
+                isClone = true;
+            }
         }
     }
 }

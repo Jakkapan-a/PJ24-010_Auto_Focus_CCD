@@ -50,8 +50,8 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             dt.Columns.Add("type", typeof(string));
             dt.Columns.Add("voltage_min", typeof(string));
             dt.Columns.Add("voltage_max", typeof(string));
-            dt.Columns.Add("amp_min", typeof(string));
-            dt.Columns.Add("amp_max", typeof(string));
+            dt.Columns.Add("current_min", typeof(string));
+            dt.Columns.Add("current_max", typeof(string));
             dt.Columns.Add("onnx_model_name", typeof(string));
             dt.Columns.Add("updated_at", typeof(string));
             return dt;
@@ -69,7 +69,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             {
                 if(product == null) continue;
                 no++;
-                dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM" : "NONE", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.amp_min / 1000:f2}", $"{(double)product.amp_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
+                dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM" : "NONE", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.current_min / 1000:f2}", $"{(double)product.current_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
             }
         }
 
@@ -97,8 +97,8 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             dgvProduct.Columns["type"].HeaderText = "Type";
             dgvProduct.Columns["voltage_min"].HeaderText = "Voltage Min";
             dgvProduct.Columns["voltage_max"].HeaderText = "Voltage Max";
-            dgvProduct.Columns["amp_min"].HeaderText = "Amp Min";
-            dgvProduct.Columns["amp_max"].HeaderText = "Amp Max";
+            dgvProduct.Columns["current_min"].HeaderText = "Current Min (mA)";
+            dgvProduct.Columns["current_max"].HeaderText = "Current Max (mA)";
             dgvProduct.Columns["onnx_model_name"].HeaderText = "Onnx Model";
             dgvProduct.Columns["updated_at"].HeaderText = "Updated At";
 
@@ -161,8 +161,8 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                     product.type = cbType.SelectedIndex;
                     product.voltage_min = Convert.ToInt32(txtMinVoltage.Value * 1000);
                     product.voltage_max = Convert.ToInt32(txtMaxVoltage.Value * 1000);
-                    product.amp_min = Convert.ToInt32(txtMinAmp.Value * 1000);
-                    product.amp_max = Convert.ToInt32(txtMaxAmp.Value * 1000);
+                    product.current_min = Convert.ToInt32(txtMinAmp.Value * 1000);
+                    product.current_max = Convert.ToInt32(txtMaxAmp.Value * 1000);
                     product.onnx_model_id = onnx_id;
                     product.Save();
 
@@ -183,8 +183,8 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                         product.type = cbType.SelectedIndex;
                         product.voltage_min = Convert.ToInt32(txtMinVoltage.Value * 1000);
                         product.voltage_max = Convert.ToInt32(txtMaxVoltage.Value * 1000);
-                        product.amp_min = Convert.ToInt32(txtMinAmp.Value * 1000);
-                        product.amp_max = Convert.ToInt32(txtMaxAmp.Value * 1000);
+                        product.current_min = Convert.ToInt32(txtMinAmp.Value * 1000);
+                        product.current_max = Convert.ToInt32(txtMaxAmp.Value * 1000);
                         product.onnx_model_id = onnx_id;
                         product.Update();
                     }
@@ -235,8 +235,8 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                 cbType.SelectedIndex = dgvProduct.Rows[selectedRow].Cells["type"].Value.ToString() == "PVM" ? 1 : 0;
                 txtMinVoltage.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["voltage_min"].Value);
                 txtMaxVoltage.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["voltage_max"].Value);
-                txtMinAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["amp_min"].Value);
-                txtMaxAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["amp_max"].Value);
+                txtMinAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["current_min"].Value);
+                txtMaxAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["current_max"].Value);
                 onnx_id = Product.Get(id).onnx_model_id;
                 txtOnnx.Text = Product.Get(id).GetOnnxModel().name;
 

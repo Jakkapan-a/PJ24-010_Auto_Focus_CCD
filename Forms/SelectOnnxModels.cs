@@ -26,7 +26,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             RenderTable();
         }
 
-        private int id = -1;
+        private int? id = -1;
         private int pageSize = 100; // จำนวนข้อมูลต่อหน้า
         private int currentPage = 1; // หน้าปัจจุบัน
         private int totalData;

@@ -13,8 +13,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public int type { get; set; } // 0 = NONE, 1 = PVM
         public int voltage_min { get; set; }
         public int voltage_max { get; set; }
-        public int amp_min { get; set; }
-        public int amp_max { get; set; }
+        public int current_min { get; set; }
+        public int current_max { get; set; }
         public int onnx_model_id { get; set; } // model id 
         public string created_at { get; set; }
         public string updated_at { get; set; }
@@ -30,8 +30,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             `type` INTEGER NOT NULL,
             `voltage_min` INTEGER NOT NULL,
             `voltage_max` INTEGER NOT NULL,
-            `amp_min` INTEGER NOT NULL,
-            `amp_max` INTEGER NOT NULL,
+            `current_min` INTEGER NOT NULL,
+            `current_max` INTEGER NOT NULL,
             `onnx_model_id` INTEGER NOT NULL,
             `created_at` TEXT NOT NULL,
             `updated_at` TEXT NOT NULL,
@@ -55,8 +55,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
                 { "@type", this.type },
                 { "@voltage_min", this.voltage_min },
                 { "@voltage_max", this.voltage_max },
-                { "@amp_min", this.amp_min },
-                { "@amp_max", this.amp_max },
+                { "@current_min", this.current_min },
+                { "@current_max", this.current_max },
                 { "@onnx_model_id", this.onnx_model_id },
                 { "@created_at", this.created_at },
                 { "@updated_at", SQLite.SQliteDataAccess.GetDateTimeNow() }
@@ -67,8 +67,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public void Save()
         {
             string sql = @"
-            INSERT INTO product (name, type, voltage_min, voltage_max, amp_min, amp_max, onnx_model_id, created_at, updated_at)
-            VALUES (@name, @type, @voltage_min, @voltage_max, @amp_min, @amp_max, @onnx_model_id, @created_at, @updated_at);
+            INSERT INTO product (name, type, voltage_min, voltage_max, current_min, current_max, onnx_model_id, created_at, updated_at)
+            VALUES (@name, @type, @voltage_min, @voltage_max, @current_min, @current_max, @onnx_model_id, @created_at, @updated_at);
             ";
 
             Dictionary<string, object> parameters = CreateParameters();
@@ -84,7 +84,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         {
             string sql = @"
             UPDATE product
-            SET name = @name, type = @type, voltage_min = @voltage_min, voltage_max = @voltage_max, amp_min = @amp_min, amp_max = @amp_max, onnx_model_id = @onnx_model_id, updated_at = @updated_at
+            SET name = @name, type = @type, voltage_min = @voltage_min, voltage_max = @voltage_max, current_min = @current_min, current_max = @current_max, onnx_model_id = @onnx_model_id, updated_at = @updated_at
             WHERE id = @id;
             ";
 

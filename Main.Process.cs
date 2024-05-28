@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace PJ24_010_Auto_Focus_CCD
 {
@@ -12,10 +13,18 @@ namespace PJ24_010_Auto_Focus_CCD
     {
         private int onnx_model_id = -1;
         private Product? product;
+
+        private System.Windows.Forms.Timer timerCountStart = new System.Windows.Forms.Timer();
         private void InitializeProcess()
         {
+            timerCountStart?.Dispose();
 
+            timerCountStart = new System.Windows.Forms.Timer();
+            timerCountStart.Interval = 100;
+            timerCountStart.Tick += TimerCountStart_Tick;
         }
+
+       
 
         /**
          * Process
@@ -26,7 +35,8 @@ namespace PJ24_010_Auto_Focus_CCD
          * 5. 
          */
         private ProcessStatus processStatus = ProcessStatus.none;
-        private void ProcessValiidateData()
+        Product? _product = null;
+        private void ProcessValidatedData()
         {
             // Validate Data 
             string txtQr = this.txtQr.Text;
@@ -35,13 +45,13 @@ namespace PJ24_010_Auto_Focus_CCD
             string productName = txtQr.Substring(0, 7);
             Debug.WriteLine("Product Name: " + productName);
 
-            var _product = Product.Get(productName);
+            _product = Product.Get(productName);
             if (_product != null)
             {
                 this.product = _product;
-                processStatus = ProcessStatus.ready;
+                processStatus = ProcessStatus.wait_start;
                 this.txtQr.ReadOnly = true;
-                this.lbTitle.Text = _product.name + " - Waiting for Test";
+                this.lbTitle.Text = _product.name + " - Wait Testing";
 
                 if (_product.onnx_model_id != onnx_model_id)
                 {
@@ -49,6 +59,10 @@ namespace PJ24_010_Auto_Focus_CCD
 
 
                 }
+
+                string _dataSerialType = $"RAY:{ (product.type == 1 ? "PVM1" : "NOT1")}";
+                this.SendDataBuffer(_dataSerialType);
+
                 this.txtQr.ReadOnly = false;
                 this.ActiveControl = this.txtQr;
                 this.txtQr.Focus();
@@ -63,26 +77,77 @@ namespace PJ24_010_Auto_Focus_CCD
                 this.txtQr.Focus();
             }
         }
-
+       
         private void StartProcess()
         {
             if(processStatus == ProcessStatus.none)
             {
-                //MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if (processStatus != ProcessStatus.wait_start)
+            {
+                MessageBox.Show("Invalid Process, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            // Code...
+            // Count 1.5 sec for test
+            countDownStart = 15;
+            timerCountStart.Start();
+        }
+        private bool isClone = false;
+        private async void TestProcess()
+        {
             // code...
+            await Task.Run(() =>
+            {
+                isClone = false;
+                int count_error = 20;
+                while (!isClone)
+                {
+                    Thread.Sleep(100);
+                    count_error--;
+                    if(count_error < 0)
+                    {
+                        break;
+                    }
+                }
 
+                if(count_error < 0)
+                {
+                    processStatus = ProcessStatus.error;
+                    return;
+                }
 
+                // Process Prediction
+
+                // Validate
+            });
             // Pass
             this.lbTitle.Text = "PASS - " + product?.name;
             this.lbTitle.ForeColor = Color.White;
             this.lbTitle.BackColor = Color.Green;
-            processStatus = ProcessStatus.ready;
+            processStatus = ProcessStatus.pass;
         }
 
         private void StopProcess()
         {
+            if (timerCountStart.Enabled)
+            {
+                timerCountStart.Stop();
+                processStatus = ProcessStatus.wait_start;
+                return;
+            }
+            //if (processStatus != ProcessStatus.pass)
+            //{
+            //    return;
+            //}
+
+            //if (processStatus != ProcessStatus.fail)
+            //{
+            //    return
+            //}
             // code...
              // Title
             this.lbTitle.Text = "Ready";
@@ -95,21 +160,47 @@ namespace PJ24_010_Auto_Focus_CCD
             this.ActiveControl = this.txtQr;
             this.txtQr.Focus();
             this.txtQr.ReadOnly = false;
+            processStatus = ProcessStatus.ready;
+            string _dataSerialType = $"RAY:RST";
+            this.SendDataBuffer(_dataSerialType);
         }
-
+        private void TimerOnSecond_Tick(object? sender, EventArgs e)
+        {
+            if(processStatus == ProcessStatus.pass || processStatus == ProcessStatus.fail)
+            {
+                Debug.WriteLine("On Report");
+            }
+        }
+        private int countDownStart = 15;
+        private void TimerCountStart_Tick(object? sender, EventArgs e)
+        {
+            if (countDownStart > 0)
+            {
+                countDownStart--;
+                double down = (double)countDownStart / 10;
+                this.lbTitle.Text = "Test in " + down.ToString() + "s";
+            }
+            else
+            {
+                timerCountStart.Stop();
+                TestProcess();
+            }
+        }
     }
+
+    
 
     public enum ProcessStatus
     {
         none,
         ready,
-        wait_sensor,
+        wait_start,
         running,
         prediction,
         paused,
         stopped,
-        error,
-        pass,
-        fail,
+        error, // ERROR
+        pass, // PASS
+        fail, // NG
     }
 }

@@ -157,18 +157,18 @@
             label6.AutoSize = true;
             label6.Location = new Point(26, 325);
             label6.Name = "label6";
-            label6.Size = new Size(52, 15);
+            label6.Size = new Size(103, 15);
             label6.TabIndex = 6;
-            label6.Text = "Max mA";
+            label6.Text = "Max Current (mA)";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Location = new Point(26, 273);
             label5.Name = "label5";
-            label5.Size = new Size(50, 15);
+            label5.Size = new Size(101, 15);
             label5.TabIndex = 6;
-            label5.Text = "Min mA";
+            label5.Text = "Min Current (mA)";
             // 
             // label4
             // 

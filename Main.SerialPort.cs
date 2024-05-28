@@ -132,11 +132,43 @@ namespace PJ24_010_Auto_Focus_CCD
                     Debug.WriteLine("SN:OFF");
                     StopProcess();
                 }
+                serialDataStatus = SerialStatus.Received;
+            }else if (input.Contains("INA_DATA:"))
+            {
+                List<string> _data_extract = ExtractData(input);
+                if(_data_extract.Count > 0)
+                {
+                    // Process data
+                    Debug.WriteLine("Data: " + string.Join(",", _data_extract));
+                    this.lbVoltage.Text = _data_extract[0] + " V";
+                    this.lbCurrent.Text = _data_extract[1] + " mA";
+                }
+                serialDataStatus = SerialStatus.Received;
             }
-
-            serialDataStatus = SerialStatus.Received;
         }
-        
+
+        private List<string> ExtractData(string data) 
+        {
+            // INA_DATA:1.04,-1.30,....
+            List<string> result = new List<string>();
+            if (data.Contains("INA_DATA:"))
+            {
+                string[] dataSplit = data.Split(":");
+                if (dataSplit.Length > 1)
+                {
+                    string[] dataValue = dataSplit[1].Split(",");
+                    if (dataValue.Length > 0)
+                    {
+                        foreach (var item in dataValue)
+                        {
+                            result.Add(item);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
         private void SerialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
 
