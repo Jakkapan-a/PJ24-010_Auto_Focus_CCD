@@ -37,6 +37,7 @@
             testToolStripMenuItem = new ToolStripMenuItem();
             runToolStripMenuItem = new ToolStripMenuItem();
             parameterToolStripMenuItem = new ToolStripMenuItem();
+            captureToolStripMenuItem = new ToolStripMenuItem();
             clearMESToolStripMenuItem1 = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripProgressBar1 = new ToolStripProgressBar();
@@ -65,6 +66,7 @@
             timer = new System.Windows.Forms.Timer(components);
             contextMenuStrip = new ContextMenuStrip(components);
             clearMESToolStripMenuItem = new ToolStripMenuItem();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -115,7 +117,7 @@
             // 
             // testToolStripMenuItem
             // 
-            testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { runToolStripMenuItem, parameterToolStripMenuItem, clearMESToolStripMenuItem1 });
+            testToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { runToolStripMenuItem, parameterToolStripMenuItem, captureToolStripMenuItem, clearMESToolStripMenuItem1 });
             testToolStripMenuItem.Name = "testToolStripMenuItem";
             testToolStripMenuItem.Size = new Size(39, 20);
             testToolStripMenuItem.Text = "Test";
@@ -124,35 +126,42 @@
             // 
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(167, 22);
+            runToolStripMenuItem.Size = new Size(180, 22);
             runToolStripMenuItem.Text = "Run";
             // 
             // parameterToolStripMenuItem
             // 
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
-            parameterToolStripMenuItem.Size = new Size(167, 22);
+            parameterToolStripMenuItem.Size = new Size(180, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
+            // 
+            // captureToolStripMenuItem
+            // 
+            captureToolStripMenuItem.Name = "captureToolStripMenuItem";
+            captureToolStripMenuItem.Size = new Size(180, 22);
+            captureToolStripMenuItem.Text = "Capture";
+            captureToolStripMenuItem.Click += captureToolStripMenuItem_Click;
             // 
             // clearMESToolStripMenuItem1
             // 
             clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
-            clearMESToolStripMenuItem1.Size = new Size(167, 22);
+            clearMESToolStripMenuItem1.Size = new Size(180, 22);
             clearMESToolStripMenuItem1.Text = "Clear MES";
             clearMESToolStripMenuItem1.Click += clearMESToolStripMenuItem1_Click;
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripProgressBar1 });
-            statusStrip1.Location = new Point(0, 732);
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripProgressBar1, toolStripStatusLabel1 });
+            statusStrip1.Location = new Point(0, 730);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1209, 22);
+            statusStrip1.Size = new Size(1209, 24);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
             // toolStripProgressBar1
             // 
             toolStripProgressBar1.Name = "toolStripProgressBar1";
-            toolStripProgressBar1.Size = new Size(100, 16);
+            toolStripProgressBar1.Size = new Size(100, 18);
             // 
             // panel1
             // 
@@ -165,7 +174,7 @@
             panel1.Dock = DockStyle.Right;
             panel1.Location = new Point(1002, 24);
             panel1.Name = "panel1";
-            panel1.Size = new Size(207, 708);
+            panel1.Size = new Size(207, 706);
             panel1.TabIndex = 2;
             // 
             // lbDateTime
@@ -209,7 +218,7 @@
             txtLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtLog.Location = new Point(7, 409);
             txtLog.Name = "txtLog";
-            txtLog.Size = new Size(191, 299);
+            txtLog.Size = new Size(191, 297);
             txtLog.TabIndex = 2;
             txtLog.Text = "";
             // 
@@ -362,7 +371,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 24);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1002, 708);
+            panel2.Size = new Size(1002, 706);
             panel2.TabIndex = 3;
             // 
             // pictureBox
@@ -371,7 +380,7 @@
             pictureBox.BackColor = Color.Black;
             pictureBox.Location = new Point(12, 50);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(984, 655);
+            pictureBox.Size = new Size(984, 653);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
@@ -404,6 +413,13 @@
             clearMESToolStripMenuItem.Name = "clearMESToolStripMenuItem";
             clearMESToolStripMenuItem.Size = new Size(127, 22);
             clearMESToolStripMenuItem.Text = "Clear MES";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.BorderSides = ToolStripStatusLabelBorderSides.Left;
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(16, 19);
+            toolStripStatusLabel1.Text = "-";
             // 
             // Main
             // 
@@ -476,5 +492,7 @@
         private ContextMenuStrip contextMenuStrip;
         private ToolStripMenuItem clearMESToolStripMenuItem;
         private ToolStripMenuItem clearMESToolStripMenuItem1;
+        private ToolStripMenuItem captureToolStripMenuItem;
+        private ToolStripStatusLabel toolStripStatusLabel1;
     }
 }

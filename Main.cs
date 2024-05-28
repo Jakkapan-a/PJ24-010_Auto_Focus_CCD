@@ -2,6 +2,7 @@ using DirectShowLib;
 using PJ24_010_Auto_Focus_CCD.Forms;
 using PJ24_010_Auto_Focus_CCD.SQLite;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -214,6 +215,67 @@ namespace PJ24_010_Auto_Focus_CCD
             await Task.Delay(Properties.Settings.Default.ClearDelay);
             SendDataBuffer($"KBD:{txtEmp.Text}");
             clearMESToolStripMenuItem1.Enabled = true;
+        }
+
+        private Capture _Capture;
+        private void captureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _Capture?.Dispose();
+            _Capture = new Capture();
+            _Capture.btnCapture.Click += BtnCapture_Click;
+            _Capture.FormClosing += _Capture_FormClosing;
+            _Capture.Show();
+        }
+
+        private void _Capture_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            _Capture.btnCapture.Click -= BtnCapture_Click;
+            _Capture.FormClosing -= _Capture_FormClosing;
+        }
+
+        private bool IsCaptureImage = false;
+        private async void BtnCapture_Click(object? sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.Enabled = false;
+            if (capture.IsOpened)
+            {
+                Debug.WriteLine("Open Capture");
+                // Save Image
+                string name = "IMG_" + Guid.NewGuid();
+                name = name.Replace("-", "_");
+
+                await Task.Run(() =>
+                {
+                    IsCaptureImage = false;
+                    int index = 0;
+                    while (!IsCaptureImage)
+                    {
+                        index++;
+                        Thread.Sleep(100);
+                        if(index > 3)
+                        {
+                            break;
+                        }
+                    }
+
+                    if(imageCapture != null)
+                    {
+                        string date = DateTime.Now.ToString("yyyyMMdd");
+                        // Save image 
+                        string path = Path.Combine(Properties.Resources.path_image, "capture", date);
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        string file = Path.Combine(path, $"{name}.jpg");
+                        imageCapture.Save(file, ImageFormat.Jpeg);
+                        toolStripStatusLabel1.Text = $"FILE : {name}";
+                    }
+                });
+            }
+            button.Enabled = true;
         }
     }
 }

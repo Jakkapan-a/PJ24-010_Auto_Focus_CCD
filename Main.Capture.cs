@@ -36,6 +36,7 @@ namespace PJ24_010_Auto_Focus_CCD
         }
 
         private Image image = null;
+        private Image imageCapture = null;
         private void Capture_OnFrameHeader(Bitmap bitmap)
         {
             if (InvokeRequired)
@@ -52,6 +53,13 @@ namespace PJ24_010_Auto_Focus_CCD
                 image?.Dispose();
                 image = new Bitmap(bitmap);
                 isClone = true;
+            }
+
+            if(!IsCaptureImage)
+            {
+                imageCapture?.Dispose();
+                imageCapture = new Bitmap(bitmap);
+                IsCaptureImage = true;
             }
         }
     }

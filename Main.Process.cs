@@ -17,7 +17,8 @@ namespace PJ24_010_Auto_Focus_CCD
         private Product? product;
 
         private System.Windows.Forms.Timer timerCountStart = new System.Windows.Forms.Timer();
-
+        IDeserializer deserializer;
+        IPredictor predictor;
         private void InitializeProcess()
         {
             timerCountStart?.Dispose();
@@ -25,9 +26,13 @@ namespace PJ24_010_Auto_Focus_CCD
             timerCountStart = new System.Windows.Forms.Timer();
             timerCountStart.Interval = 100;
             timerCountStart.Tick += TimerCountStart_Tick;
+
+            deserializer = new DeserializerBuilder().Build();
+            //IPredictor predictor = await Task.Run(() => { return YoloV5Predictor.Create(pathModel, classobjPredic); });
+
         }
 
-       
+
 
         /**
          * Process

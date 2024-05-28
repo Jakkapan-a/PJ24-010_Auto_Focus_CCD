@@ -111,6 +111,15 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ./system/images.
+        /// </summary>
+        internal static string path_image {
+            get {
+                return ResourceManager.GetString("path_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ./system/onnx_models.
         /// </summary>
         internal static string path_models {
