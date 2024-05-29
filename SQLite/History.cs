@@ -75,8 +75,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public void Save()
         {
             string sql = @"
-                INSERT INTO history (employee, qr_code, path_folder, product_id, voltage, current, onnx_model_id, result, re_judgment, created_at, updated_at)
-                VALUES (@employee, @qr_code, @path_folder, @product_id, @voltage, @current, @onnx_model_id, @result, @re_judgment, @created_at, @updated_at);
+                INSERT INTO history (employee, qr_code, path_folder, product_id,model_name , voltage, current, onnx_model_id, result, re_judgment, created_at, updated_at)
+                VALUES (@employee, @qr_code, @path_folder, @product_id,@model_name , @voltage, @current, @onnx_model_id, @result, @re_judgment, @created_at, @updated_at);
             ";
             Dictionary<string, object> parameters = CreateParameters();
             parameters["@created_at"] = SQLite.SQliteDataAccess.GetDateTimeNow();
@@ -130,9 +130,9 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault();
          }
 
-        public static List<History> Search(string employee = "", string model_name = "", string qr_code = "", string result = "", string re_judgment = "", string date = "", int start = 0, int limit = 100, string order_by = " id desc")
+        public static List<History> Search(string employee = "", string model_name = "", string qr_code = "", string result = "", string re_judgment = "", string date = "", int start = 0, int limit = 100, string order_by = "id desc")
         {
-            string sql = "SELECT * FROM history WHERE employee LIKE @employee AND model_name LIKE @model_name AND qr_code LIKE @qr_code AND result LIKE @result AND re_judgment LIKE @re_judgment AND created_at LIKE @date ORDER BY @order_by LIMIT @start, @limit";
+            string sql = "SELECT * FROM history WHERE employee LIKE @employee AND model_name LIKE @model_name AND qr_code LIKE @qr_code AND result LIKE @result AND re_judgment LIKE @re_judgment AND created_at LIKE @date ORDER BY "+order_by+" LIMIT @start, @limit";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters["@employee"] = @"%" + employee + @"%";
             parameters["@model_name"] = @"%" + model_name + @"%";

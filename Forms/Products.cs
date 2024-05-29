@@ -66,7 +66,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             int no = (currentPage - 1) * pageSize;
             foreach (Product product in products)
             {
-                if(product == null) continue;
+                if (product == null) continue;
                 no++;
                 dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM" : "NONE", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.current_min / 1000:f2}", $"{(double)product.current_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
             }
@@ -176,7 +176,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
 
                     // Update
                     Product? product = Product.Get(id);
-                    if(product != null)
+                    if (product != null)
                     {
                         product.name = txtName.Text;
                         product.type = cbType.SelectedIndex;
@@ -266,17 +266,28 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(dgvProduct.SelectedRows.Count > 0)
+            if (dgvProduct.SelectedRows.Count > 0)
             {
                 if (MessageBox.Show("Are you sure you want to delete this record?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Product? product = Product.Get(id);
-                    if(product != null){
+                    if (product != null)
+                    {
                         product.Delete();
                     }
                     RenderTable();
                 }
             }
+        }
+
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

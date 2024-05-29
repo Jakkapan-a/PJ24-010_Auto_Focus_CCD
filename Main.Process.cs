@@ -146,7 +146,6 @@ namespace PJ24_010_Auto_Focus_CCD
                 {
                     product = null;
                     processStatus = ProcessStatus.none;
-                    // MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.lbTitle.Text = "QR Code Invalid, Please scan again";
                     this.lbTitle.ForeColor = Color.Black;
                     this.lbTitle.BackColor = Color.Orange;
@@ -159,7 +158,6 @@ namespace PJ24_010_Auto_Focus_CCD
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 this.lbTitle.Text = ex.Message;
                 this.lbTitle.ForeColor = Color.Black;
                 this.lbTitle.BackColor = Color.Orange;

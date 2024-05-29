@@ -163,6 +163,16 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Export_CSV {
+            get {
+                object obj = ResourceManager.GetObject("Export CSV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap history__1_ {
             get {
                 object obj = ResourceManager.GetObject("history (1)", resourceCulture);

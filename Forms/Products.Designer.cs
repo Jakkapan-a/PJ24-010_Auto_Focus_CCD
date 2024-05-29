@@ -388,6 +388,7 @@
             btnPrevious.TabIndex = 1;
             btnPrevious.Text = "<<";
             btnPrevious.UseVisualStyleBackColor = true;
+            btnPrevious.Click += btnPrevious_Click;
             // 
             // btnNext
             // 
@@ -398,6 +399,7 @@
             btnNext.TabIndex = 2;
             btnNext.Text = ">>";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // txtSearch
             // 

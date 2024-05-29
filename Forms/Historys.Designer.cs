@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Historys));
             statusStrip1 = new StatusStrip();
+            toolStripProgressBar = new ToolStripProgressBar();
             groupBox1 = new GroupBox();
             btnSelectModel = new Button();
             txtModel = new TextBox();
@@ -46,10 +47,12 @@
             label2 = new Label();
             label1 = new Label();
             groupBox2 = new GroupBox();
+            btnExportCSV = new Button();
             btnPrevious = new Button();
             btnNext = new Button();
             dgvHistory = new DataGridView();
             lbPage = new Label();
+            statusStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvHistory).BeginInit();
@@ -57,11 +60,17 @@
             // 
             // statusStrip1
             // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripProgressBar });
             statusStrip1.Location = new Point(0, 638);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1125, 22);
             statusStrip1.TabIndex = 0;
             statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripProgressBar
+            // 
+            toolStripProgressBar.Name = "toolStripProgressBar";
+            toolStripProgressBar.Size = new Size(100, 16);
             // 
             // groupBox1
             // 
@@ -97,6 +106,7 @@
             btnSelectModel.Size = new Size(23, 23);
             btnSelectModel.TabIndex = 2;
             btnSelectModel.UseVisualStyleBackColor = true;
+            btnSelectModel.Click += btnSelectModel_Click;
             // 
             // txtModel
             // 
@@ -213,6 +223,7 @@
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox2.Controls.Add(btnExportCSV);
             groupBox2.Controls.Add(btnPrevious);
             groupBox2.Controls.Add(btnNext);
             groupBox2.Controls.Add(dgvHistory);
@@ -224,6 +235,18 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Table";
             // 
+            // btnExportCSV
+            // 
+            btnExportCSV.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExportCSV.BackgroundImage = Properties.Resources.Export_CSV;
+            btnExportCSV.BackgroundImageLayout = ImageLayout.Zoom;
+            btnExportCSV.Location = new Point(788, 22);
+            btnExportCSV.Name = "btnExportCSV";
+            btnExportCSV.Size = new Size(32, 32);
+            btnExportCSV.TabIndex = 2;
+            btnExportCSV.UseVisualStyleBackColor = true;
+            btnExportCSV.Click += btnExportCSV_Click;
+            // 
             // btnPrevious
             // 
             btnPrevious.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -233,6 +256,7 @@
             btnPrevious.TabIndex = 1;
             btnPrevious.Text = "<<";
             btnPrevious.UseVisualStyleBackColor = true;
+            btnPrevious.Click += btnPrevious_Click;
             // 
             // btnNext
             // 
@@ -243,12 +267,14 @@
             btnNext.TabIndex = 1;
             btnNext.Text = ">>";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // dgvHistory
             // 
             dgvHistory.AllowUserToAddRows = false;
             dgvHistory.AllowUserToDeleteRows = false;
             dgvHistory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvHistory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvHistory.Location = new Point(15, 63);
             dgvHistory.Name = "dgvHistory";
@@ -276,8 +302,12 @@
             Controls.Add(statusStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Historys";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Historys";
+            WindowState = FormWindowState.Maximized;
             Load += Historys_Load;
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -315,5 +345,7 @@
         private DataGridView dgvHistory;
         private Label lbPage;
         private Button btnSelectModel;
+        private Button btnExportCSV;
+        private ToolStripProgressBar toolStripProgressBar;
     }
 }
