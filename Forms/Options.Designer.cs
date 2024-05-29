@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options));
             groupBox1 = new GroupBox();
             txtClearDelay = new NumericUpDown();
             label3 = new Label();
@@ -275,6 +276,7 @@
             Controls.Add(IsAllowSendData);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Options";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Options";

@@ -316,5 +316,10 @@ namespace PJ24_010_Auto_Focus_CCD
             notification.Type = NotificationType.Success;
             notification.ShowNotification("Change to PASS", 4000);
         }
+
+        private void parameterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

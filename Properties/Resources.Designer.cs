@@ -73,6 +73,36 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_list_32 {
+            get {
+                object obj = ResourceManager.GetObject("add_list_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap broom {
+            get {
+                object obj = ResourceManager.GetObject("broom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap camera_logo {
+            get {
+                object obj = ResourceManager.GetObject("camera logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cancel {
             get {
                 object obj = ResourceManager.GetObject("cancel", resourceCulture);
@@ -106,6 +136,16 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         internal static System.Drawing.Bitmap e_lead_light {
             get {
                 object obj = ResourceManager.GetObject("e-lead-light", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap edit_production_order_32 {
+            get {
+                object obj = ResourceManager.GetObject("edit_production_order_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -151,6 +191,26 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap onnx_icon_color {
+            get {
+                object obj = ResourceManager.GetObject("onnx-icon-color", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ONNX_logo_main {
+            get {
+                object obj = ResourceManager.GetObject("ONNX_logo_main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ./system/images.
         /// </summary>
         internal static string path_image {
@@ -190,9 +250,29 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap settings__321 {
+            get {
+                object obj = ResourceManager.GetObject("settings__321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Spinner_1s_800px {
             get {
                 object obj = ResourceManager.GetObject("Spinner_1s_800px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap start_up {
+            get {
+                object obj = ResourceManager.GetObject("start-up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

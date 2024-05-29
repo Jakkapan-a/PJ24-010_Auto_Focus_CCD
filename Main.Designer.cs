@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             menuStrip1 = new MenuStrip();
             settingToolStripMenuItem = new ToolStripMenuItem();
             oNNXToolStripMenuItem = new ToolStripMenuItem();
@@ -97,23 +98,26 @@
             // 
             // oNNXToolStripMenuItem
             // 
+            oNNXToolStripMenuItem.Image = Properties.Resources.onnx_icon_color;
             oNNXToolStripMenuItem.Name = "oNNXToolStripMenuItem";
-            oNNXToolStripMenuItem.Size = new Size(159, 22);
+            oNNXToolStripMenuItem.Size = new Size(180, 22);
             oNNXToolStripMenuItem.Text = "ONNX";
             oNNXToolStripMenuItem.Click += oNNXToolStripMenuItem_Click;
             // 
             // modelsToolStripMenuItem
             // 
+            modelsToolStripMenuItem.Image = Properties.Resources.add_list_32;
             modelsToolStripMenuItem.Name = "modelsToolStripMenuItem";
-            modelsToolStripMenuItem.Size = new Size(159, 22);
+            modelsToolStripMenuItem.Size = new Size(180, 22);
             modelsToolStripMenuItem.Text = "Models CCD";
             modelsToolStripMenuItem.Click += modelsToolStripMenuItem_Click;
             // 
             // configurationToolStripMenuItem
             // 
+            configurationToolStripMenuItem.Image = Properties.Resources.settings__321;
             configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            configurationToolStripMenuItem.Size = new Size(159, 22);
+            configurationToolStripMenuItem.Size = new Size(180, 22);
             configurationToolStripMenuItem.Text = "Options";
             configurationToolStripMenuItem.Click += configurationToolStripMenuItem_Click;
             // 
@@ -126,6 +130,7 @@
             // 
             // runToolStripMenuItem
             // 
+            runToolStripMenuItem.Image = Properties.Resources.start_up;
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
             runToolStripMenuItem.Size = new Size(167, 22);
@@ -136,9 +141,11 @@
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
             parameterToolStripMenuItem.Size = new Size(167, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
+            parameterToolStripMenuItem.Click += parameterToolStripMenuItem_Click;
             // 
             // captureToolStripMenuItem
             // 
+            captureToolStripMenuItem.Image = Properties.Resources.camera_logo;
             captureToolStripMenuItem.Name = "captureToolStripMenuItem";
             captureToolStripMenuItem.Size = new Size(167, 22);
             captureToolStripMenuItem.Text = "Capture";
@@ -146,6 +153,7 @@
             // 
             // clearMESToolStripMenuItem1
             // 
+            clearMESToolStripMenuItem1.Image = Properties.Resources.broom;
             clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
             clearMESToolStripMenuItem1.Size = new Size(167, 22);
             clearMESToolStripMenuItem1.Text = "Clear MES";
@@ -460,6 +468,7 @@
             Controls.Add(panel1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;

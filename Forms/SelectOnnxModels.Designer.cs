@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectOnnxModels));
             dgvOnnx = new DataGridView();
             txtSearch = new TextBox();
             btnNext = new Button();
@@ -115,6 +116,7 @@
             Controls.Add(btnNext);
             Controls.Add(txtSearch);
             Controls.Add(dgvOnnx);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SelectOnnxModels";

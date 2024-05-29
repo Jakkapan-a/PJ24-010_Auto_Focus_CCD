@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Products));
             statusStrip1 = new StatusStrip();
             groupBox1 = new GroupBox();
             txtMaxAmp = new NumericUpDown();
@@ -425,6 +426,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(statusStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Products";
             Padding = new Padding(5, 10, 5, 5);
             StartPosition = FormStartPosition.CenterScreen;

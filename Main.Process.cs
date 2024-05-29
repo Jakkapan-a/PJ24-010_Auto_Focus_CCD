@@ -60,7 +60,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 lbTitle.BackColor = Color.YellowGreen;
                 await Task.Delay(500);
                 txtLog.Text = "";
-                this.history.re_judgment = "N";
+                this.history.re_judgment = "Null";
             
                 // Validate Data 
                 string txtQr = this.txtQr.Text;
@@ -203,11 +203,14 @@ namespace PJ24_010_Auto_Focus_CCD
         private bool isClone = false; // Clone ImagePredict
         private const string OK_SUFFIX = "_OK";
         private const string NG_SUFFIX = "_NG";
-        private string pathFolder = "";
+        private string pathFolder = "";  
+        private Stopwatch stopwatchTestProcess = new Stopwatch();
+               
         private async void TestProcess()
-        {
+        { 
+            stopwatchTestProcess.Restart();
             // code...
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 SetLog("+++ Start Testing +++");
                 isClone = false;
@@ -227,12 +230,12 @@ namespace PJ24_010_Auto_Focus_CCD
                     return;
                 }
 
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
+              
                 // Process Prediction
                 predictions = predictor.Predict(imagePredict);
-                stopwatch.Stop();
-                SetLog("Prediction Time: " + stopwatch.ElapsedMilliseconds + "ms\n");
+                // stopwatchTestProcess.Stop();
+                SetLog("Prediction Time: " + stopwatchTestProcess.ElapsedMilliseconds + "ms\n");
+                // stopwatchTestProcess.Start();
                 // Validate
                 Debug.WriteLine(predictions);
                 if(predictions != null )
@@ -265,19 +268,21 @@ namespace PJ24_010_Auto_Focus_CCD
 
                 // Check Template
                 bool isPass = true;
+                bool isResultNone = false;
                 foreach (var item in templatePredictor)
                 {
                     if(item.Value == ItemResults.none)
                     {
                         isPass = false;
-                        break;
+                        isResultNone = true;
+                        SetLog($"Check : {item.Key} = NULL");
                     }else if(item.Value == ItemResults.fail)
                     {
                         isPass = false;
-                        break;
                     }
+
                 }
-                SetLog("\n\n+++-------------+++");
+                SetLog("\n+++-------------+++");
 
                 history.voltage = (int)(currentVoltage * 1000);
                 history.current = (int)(currentCurrent * 1000);
@@ -302,11 +307,29 @@ namespace PJ24_010_Auto_Focus_CCD
                 {
                     processStatus = ProcessStatus.pass;
                     history.result = "PASS";
+                    string _dataSerialType = $"KBD:{txtQr.Text}";
+                    this.SendDataBuffer(_dataSerialType);
+                    await Task.Delay(500);
+                    _dataSerialType = $"LED:G";
+                    this.SendDataBuffer(_dataSerialType);
                 }
                 else
                 {
                     processStatus = ProcessStatus.fail;
                     history.result = "NG";
+                    // Send Data If Allow Send Data
+                    if(Properties.Settings.Default.IsAllowSendData && !isResultNone)
+                    {
+                        string _dataSerialTypeKyeNG = $"KBD:{Properties.Settings.Default.KeyNG}";
+                        this.SendDataBuffer(_dataSerialTypeKyeNG);
+                        await Task.Delay(Properties.Settings.Default.KeyNGDelay);
+                        string _dataSerialType = $"KBD:{txtQr.Text}";
+                        this.SendDataBuffer(_dataSerialType);
+                    }
+
+                    await Task.Delay(500);
+                    string _dataLED = $"LED:R";
+                    this.SendDataBuffer(_dataLED);
                 }
             });
 
@@ -356,7 +379,8 @@ namespace PJ24_010_Auto_Focus_CCD
                 img.Save(pathImagePredict, System.Drawing.Imaging.ImageFormat.Jpeg);
                 img?.Dispose();
             }
-
+            stopwatchTestProcess.Stop();
+            SetLog("End Process Time: " + stopwatchTestProcess.ElapsedMilliseconds + "ms\n");
         }
 
         private void StopProcess()
@@ -429,6 +453,9 @@ namespace PJ24_010_Auto_Focus_CCD
             }
             else
             {
+                this.lbTitle.Text = "Testing...";
+                this.lbTitle.ForeColor = Color.Black;
+                this.lbTitle.BackColor = Color.YellowGreen;
                 timerCountStart.Stop();
                 TestProcess();
             }

@@ -55,6 +55,8 @@ TcPINOUT RELAY2_PVM(RELAY2_PVM_PIN, false);
 #define RELAY3_PVM_PIN 9 //
 TcPINOUT RELAY3_PVM(RELAY3_PVM_PIN, false);
 
+
+uint8_t RESULT = 0;
 // -------------------- SERIAL 0 -------------------- //
 bool startReceived0 = false;
 bool endReceived0 = false;
@@ -180,23 +182,36 @@ void loop()
   manageSerial1();
 
   uint32_t currentTime = millis();
-  if(currentTime - lastTime > 1000)
+  if (currentTime - lastTime > 1000)
   {
     secondTick();
     lastTime = currentTime;
-  }else if(currentTime < lastTime)
+  }
+  else if (currentTime < lastTime)
   {
     lastTime = currentTime; // Overflow
+  }
+
+  if(RESULT == 2){
+    buzzerPass.total = 4;
   }
 }
 void secondTick()
 {
-    float busvoltage = ina219.getBusVoltage_V();
-    float current_mA = ina219.getCurrent_mA();    
-    Serial.print("Bus Voltage:   "); Serial.print(busvoltage); Serial.println(" V");
-    Serial.print("Current:       "); Serial.print(current_mA); Serial.println(" mA");
+  float busvoltage = ina219.getBusVoltage_V();
+  float current_mA = ina219.getCurrent_mA();
+  Serial.print("Bus Voltage:   ");
+  Serial.print(busvoltage);
+  Serial.println(" V");
+  Serial.print("Current:       ");
+  Serial.print(current_mA);
+  Serial.println(" mA");
 
-    Serial1.print("$INA_DATA:"); Serial1.print(busvoltage); Serial1.print(","); Serial1.print(current_mA); Serial1.println("#");
+  Serial1.print("$INA_DATA:");
+  Serial1.print(busvoltage);
+  Serial1.print(",");
+  Serial1.print(current_mA);
+  Serial1.println("#");
 }
 
 void manageSerial0()
@@ -252,10 +267,10 @@ void parseData(String dataInput)
     }
 
     buzzerPass.setTime(200);
-    if (dataInput.indexOf("KBD:clear") == -1)
-    {
-      buzzerPass.total = 2;
-    }
+    // if (dataInput.indexOf("KBD:clear") == -1)
+    // {
+    //   buzzerPass.total = 2;
+    // }
   }
   else if (dataInput.indexOf("CMD:") != -1)
   {
@@ -272,6 +287,8 @@ void parseData(String dataInput)
       RELAY1_NOT.off();
       RELAY2_PVM.off();
       RELAY3_PVM.off();
+      RESULT = 0;
+      buzzerPass.total = 0;
     }
     else if (serialData.indexOf("NOT1") != -1)
     {
@@ -313,24 +330,54 @@ void parseData(String dataInput)
       LED_RED.on();
       LED_GREEN.off();
       LED_BLUE.off();
+      RESULT = 2;
     }
     else if (serialData.indexOf("G") != -1)
     {
       LED_RED.off();
       LED_GREEN.on();
       LED_BLUE.off();
+      RESULT = 1;
+      buzzerPass.total = 2;
     }
     else if (serialData.indexOf("B") != -1)
     {
       LED_RED.off();
       LED_GREEN.off();
       LED_BLUE.on();
+      RESULT = 1;
+      buzzerPass.total = 1;
     }
     else
     {
       LED_RED.off();
       LED_GREEN.off();
       LED_BLUE.off();
+      RESULT = 0;
+    }
+  }
+  else if (dataInput.indexOf("BZ:") != -1)
+  {
+    String serialData = extractData(dataInput, "BZ:");
+    if (serialData == "1" )
+    {
+      buzzerPass.total = 1;
+    }
+    else if (serialData == "2" || serialData == "PASS" )
+    {
+      buzzerPass.total = 2;
+    }
+    else if (serialData == "3")
+    {
+      buzzerPass.total = 3;
+    }else if(serialData == "4" || serialData == "FAIL" || serialData == "NG")
+    {
+      buzzerPass.total = 4;
+      RESULT = 2;
+    }
+    else
+    {
+      buzzerPass.total = 0;
     }
   }
 }

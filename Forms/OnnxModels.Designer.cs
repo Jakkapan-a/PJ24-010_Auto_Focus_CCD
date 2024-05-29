@@ -28,18 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OnnxModels));
             statusStrip1 = new StatusStrip();
             toolStripProgressBar1 = new ToolStripProgressBar();
             toolStripStatusLabel = new ToolStripStatusLabel();
             groupBox1 = new GroupBox();
+            btnTemplate = new Button();
             btnLabel = new Button();
             btnDelete = new Button();
             btnNew = new Button();
             btnSave = new Button();
             btnOnnx = new Button();
+            txtTemplate = new TextBox();
             txtLabel = new TextBox();
             txtOnnx = new TextBox();
             txtName = new TextBox();
+            template = new Label();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
@@ -54,9 +58,6 @@
             lbPage = new Label();
             txtDetailLabel = new RichTextBox();
             label5 = new Label();
-            btnTemplate = new Button();
-            txtTemplate = new TextBox();
-            template = new Label();
             statusStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -111,6 +112,18 @@
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Forms";
+            // 
+            // btnTemplate
+            // 
+            btnTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnTemplate.Enabled = false;
+            btnTemplate.Location = new Point(1083, 148);
+            btnTemplate.Name = "btnTemplate";
+            btnTemplate.Size = new Size(37, 23);
+            btnTemplate.TabIndex = 3;
+            btnTemplate.Text = "...";
+            btnTemplate.UseVisualStyleBackColor = true;
+            btnTemplate.Click += btnTemplate_Click;
             // 
             // btnLabel
             // 
@@ -171,6 +184,15 @@
             btnOnnx.UseVisualStyleBackColor = true;
             btnOnnx.Click += btnOnnx_Click;
             // 
+            // txtTemplate
+            // 
+            txtTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTemplate.Location = new Point(81, 148);
+            txtTemplate.Name = "txtTemplate";
+            txtTemplate.ReadOnly = true;
+            txtTemplate.Size = new Size(996, 23);
+            txtTemplate.TabIndex = 1;
+            // 
             // txtLabel
             // 
             txtLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -198,6 +220,15 @@
             txtName.Size = new Size(996, 23);
             txtName.TabIndex = 1;
             txtName.TextChanged += txtName_TextChanged;
+            // 
+            // template
+            // 
+            template.AutoSize = true;
+            template.Location = new Point(20, 152);
+            template.Name = "template";
+            template.Size = new Size(55, 15);
+            template.TabIndex = 0;
+            template.Text = "Template";
             // 
             // label3
             // 
@@ -356,36 +387,6 @@
             label5.TabIndex = 5;
             label5.Text = "Details";
             // 
-            // btnTemplate
-            // 
-            btnTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnTemplate.Enabled = false;
-            btnTemplate.Location = new Point(1083, 148);
-            btnTemplate.Name = "btnTemplate";
-            btnTemplate.Size = new Size(37, 23);
-            btnTemplate.TabIndex = 3;
-            btnTemplate.Text = "...";
-            btnTemplate.UseVisualStyleBackColor = true;
-            btnTemplate.Click += btnTemplate_Click;
-            // 
-            // txtTemplate
-            // 
-            txtTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtTemplate.Location = new Point(81, 148);
-            txtTemplate.Name = "txtTemplate";
-            txtTemplate.ReadOnly = true;
-            txtTemplate.Size = new Size(996, 23);
-            txtTemplate.TabIndex = 1;
-            // 
-            // template
-            // 
-            template.AutoSize = true;
-            template.Location = new Point(20, 152);
-            template.Name = "template";
-            template.Size = new Size(55, 15);
-            template.TabIndex = 0;
-            template.Text = "Template";
-            // 
             // OnnxModels
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -394,6 +395,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(statusStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "OnnxModels";
             Padding = new Padding(10, 5, 10, 2);
             StartPosition = FormStartPosition.CenterScreen;
