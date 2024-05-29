@@ -94,5 +94,17 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
                 this["ClearDelay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public float Score {
+            get {
+                return ((float)(this["Score"]));
+            }
+            set {
+                this["Score"] = value;
+            }
+        }
     }
 }

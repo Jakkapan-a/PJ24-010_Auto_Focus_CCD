@@ -72,6 +72,9 @@ namespace PJ24_010_Auto_Focus_CCD
                 btnConnect.Enabled = false;
                 if (is_connect)
                 {
+                    lbTitle.Text = "Connecting...";
+                    lbTitle.ForeColor = Color.Black;
+                    lbTitle.BackColor = Color.Yellow;
                     // Connect camera
                     if (capture.IsRunning)
                     {
@@ -97,12 +100,17 @@ namespace PJ24_010_Auto_Focus_CCD
                     await capture.StartAsync(deviceSelect);
 
                     // Connect serial port
-                    SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString()));
+                  if(!SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString())))
+                    {
+                        throw new Exception("Serial port not connected.");
+                    }
 
                 }
                 else
                 {
                     // Disconnect
+                    lbTitle.Text = "Disconnecting...";
+                    lbTitle.ForeColor = Color.Black;
                     if (capture.IsRunning)
                     {
                         btnConnect.Text = "Stopping...";
@@ -114,7 +122,7 @@ namespace PJ24_010_Auto_Focus_CCD
                     DisconnectSerial();
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 is_connect = false;
                 DisconnectSerial();
@@ -124,6 +132,9 @@ namespace PJ24_010_Auto_Focus_CCD
                     this.pictureBox.Image?.Dispose();
                     this.pictureBox.Image = null;
                 }
+                lbTitle.Text = "Error : " + ex.Message;
+                lbTitle.ForeColor = Color.Black;
+                lbTitle.BackColor = Color.Red;
             }
             finally
             {
@@ -132,11 +143,18 @@ namespace PJ24_010_Auto_Focus_CCD
                 {
                     btnConnect.Text = "Disconnect";
                     is_connect = true;
+                    lbTitle.Text = "Ready";
+                    lbTitle.ForeColor = Color.Black;
+                    lbTitle.BackColor = Color.Yellow;                    
                 }
                 else
                 {
                     btnConnect.Text = "Connect";
                     is_connect = false;
+                    await Task.Delay(1500);
+                    lbTitle.Text = "Disconnected";
+                    lbTitle.ForeColor = Color.Black;
+                    lbTitle.BackColor = Color.Yellow;
                 }
             }
         }
@@ -253,13 +271,13 @@ namespace PJ24_010_Auto_Focus_CCD
                     {
                         index++;
                         Thread.Sleep(100);
-                        if(index > 3)
+                        if (index > 3)
                         {
                             break;
                         }
                     }
 
-                    if(imageCapture != null)
+                    if (imageCapture != null)
                     {
                         string date = DateTime.Now.ToString("yyyyMMdd");
                         // Save image 
@@ -276,6 +294,13 @@ namespace PJ24_010_Auto_Focus_CCD
                 });
             }
             button.Enabled = true;
+        }
+
+        const string OK_TEXT = "ok";
+        const string NG_TEXT = "ng";
+        private void pictureBox_Paint(object sender, PaintEventArgs e)
+        {
+           
         }
     }
 }

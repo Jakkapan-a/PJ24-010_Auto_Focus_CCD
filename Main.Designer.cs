@@ -41,6 +41,7 @@
             clearMESToolStripMenuItem1 = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             toolStripProgressBar1 = new ToolStripProgressBar();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
             panel1 = new Panel();
             lbDateTime = new Label();
             lbVoltage = new Label();
@@ -66,7 +67,6 @@
             timer = new System.Windows.Forms.Timer(components);
             contextMenuStrip = new ContextMenuStrip(components);
             clearMESToolStripMenuItem = new ToolStripMenuItem();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -126,26 +126,26 @@
             // 
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(180, 22);
+            runToolStripMenuItem.Size = new Size(167, 22);
             runToolStripMenuItem.Text = "Run";
             // 
             // parameterToolStripMenuItem
             // 
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
-            parameterToolStripMenuItem.Size = new Size(180, 22);
+            parameterToolStripMenuItem.Size = new Size(167, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
             // 
             // captureToolStripMenuItem
             // 
             captureToolStripMenuItem.Name = "captureToolStripMenuItem";
-            captureToolStripMenuItem.Size = new Size(180, 22);
+            captureToolStripMenuItem.Size = new Size(167, 22);
             captureToolStripMenuItem.Text = "Capture";
             captureToolStripMenuItem.Click += captureToolStripMenuItem_Click;
             // 
             // clearMESToolStripMenuItem1
             // 
             clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
-            clearMESToolStripMenuItem1.Size = new Size(180, 22);
+            clearMESToolStripMenuItem1.Size = new Size(167, 22);
             clearMESToolStripMenuItem1.Text = "Clear MES";
             clearMESToolStripMenuItem1.Click += clearMESToolStripMenuItem1_Click;
             // 
@@ -162,6 +162,13 @@
             // 
             toolStripProgressBar1.Name = "toolStripProgressBar1";
             toolStripProgressBar1.Size = new Size(100, 18);
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.BorderSides = ToolStripStatusLabelBorderSides.Left;
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(16, 19);
+            toolStripStatusLabel1.Text = "-";
             // 
             // panel1
             // 
@@ -384,6 +391,7 @@
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.TabIndex = 1;
             pictureBox.TabStop = false;
+            pictureBox.Paint += pictureBox_Paint;
             // 
             // lbTitle
             // 
@@ -413,13 +421,6 @@
             clearMESToolStripMenuItem.Name = "clearMESToolStripMenuItem";
             clearMESToolStripMenuItem.Size = new Size(127, 22);
             clearMESToolStripMenuItem.Text = "Clear MES";
-            // 
-            // toolStripStatusLabel1
-            // 
-            toolStripStatusLabel1.BorderSides = ToolStripStatusLabelBorderSides.Left;
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(16, 19);
-            toolStripStatusLabel1.Text = "-";
             // 
             // Main
             // 

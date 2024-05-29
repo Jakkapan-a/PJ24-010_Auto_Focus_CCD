@@ -1,6 +1,7 @@
 ﻿using PJ24_010_Auto_Focus_CCD.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
         }
 
-        private Image image = null;
+        private Image imagePredict = null;
         private Image imageCapture = null;
         private void Capture_OnFrameHeader(Bitmap bitmap)
         {
@@ -44,18 +45,36 @@ namespace PJ24_010_Auto_Focus_CCD
                 Invoke(new Action(() => Capture_OnFrameHeader(bitmap)));
                 return;
             }
-
             pictureBox.Image?.Dispose();
-            pictureBox.Image = new Bitmap(bitmap);
+            
+            if (processStatus == ProcessStatus.pass || processStatus == ProcessStatus.fail)
+            {
+                if(imagePredict != null)
+                {
+                    pictureBox.Image = (Image?)imagePredict.Clone();
+                }
+            }
+            else
+            {
+                pictureBox.Image = new Bitmap(bitmap);
 
+            }
+            // 
+            if (processStatus == ProcessStatus.pass || processStatus == ProcessStatus.fail)
+            {
+                if (predictions != null)
+                {
+                    DrawImages.DrawBoxes(pictureBox.Image, predictions, togglePause);
+                }
+            }
             if (!isClone)
             {
-                image?.Dispose();
-                image = new Bitmap(bitmap);
+                imagePredict?.Dispose();
+                imagePredict = new Bitmap(bitmap);
                 isClone = true;
             }
 
-            if(!IsCaptureImage)
+            if (!IsCaptureImage)
             {
                 imageCapture?.Dispose();
                 imageCapture = new Bitmap(bitmap);
