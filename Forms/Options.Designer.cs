@@ -42,10 +42,18 @@
             txtKeyNG = new TextBox();
             IsAllowSendData = new CheckBox();
             statusStrip1 = new StatusStrip();
+            txtScore = new NumericUpDown();
+            txtCountTest = new NumericUpDown();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtClearDelay).BeginInit();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtKeyNGDelay).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtScore).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtCountTest).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
@@ -64,11 +72,13 @@
             // 
             // txtClearDelay
             // 
+            txtClearDelay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtClearDelay.Location = new Point(92, 52);
             txtClearDelay.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
             txtClearDelay.Name = "txtClearDelay";
             txtClearDelay.Size = new Size(225, 23);
             txtClearDelay.TabIndex = 3;
+            txtClearDelay.ValueChanged += txtClearDelay_ValueChanged;
             // 
             // label3
             // 
@@ -95,6 +105,7 @@
             txtClearMessage.Name = "txtClearMessage";
             txtClearMessage.Size = new Size(224, 23);
             txtClearMessage.TabIndex = 0;
+            txtClearMessage.TextChanged += txtClearMessage_TextChanged;
             // 
             // groupBox2
             // 
@@ -114,19 +125,23 @@
             // 
             // txtKeyNGDelay
             // 
+            txtKeyNGDelay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtKeyNGDelay.Location = new Point(92, 51);
             txtKeyNGDelay.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
             txtKeyNGDelay.Name = "txtKeyNGDelay";
             txtKeyNGDelay.Size = new Size(225, 23);
             txtKeyNGDelay.TabIndex = 3;
+            txtKeyNGDelay.ValueChanged += txtKeyNGDelay_ValueChanged;
             // 
             // txtKeyNGDescription
             // 
+            txtKeyNGDescription.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtKeyNGDescription.Location = new Point(92, 80);
             txtKeyNGDescription.Name = "txtKeyNGDescription";
             txtKeyNGDescription.Size = new Size(225, 69);
             txtKeyNGDescription.TabIndex = 3;
             txtKeyNGDescription.Text = "";
+            txtKeyNGDescription.TextChanged += txtKeyNGDescription_TextChanged;
             // 
             // label5
             // 
@@ -162,6 +177,7 @@
             txtKeyNG.Name = "txtKeyNG";
             txtKeyNG.Size = new Size(224, 23);
             txtKeyNG.TabIndex = 0;
+            txtKeyNG.TextChanged += txtKeyNG_TextChanged;
             // 
             // IsAllowSendData
             // 
@@ -172,20 +188,89 @@
             IsAllowSendData.TabIndex = 2;
             IsAllowSendData.Text = "Allow Send Data (If NG)";
             IsAllowSendData.UseVisualStyleBackColor = true;
+            IsAllowSendData.CheckedChanged += IsAllowSendData_CheckedChanged;
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new Point(0, 324);
+            statusStrip1.Location = new Point(0, 374);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(358, 22);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
             // 
+            // txtScore
+            // 
+            txtScore.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtScore.DecimalPlaces = 2;
+            txtScore.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
+            txtScore.Location = new Point(109, 315);
+            txtScore.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtScore.Name = "txtScore";
+            txtScore.Size = new Size(202, 23);
+            txtScore.TabIndex = 4;
+            txtScore.Value = new decimal(new int[] { 5, 0, 0, 65536 });
+            txtScore.ValueChanged += txtScore_ValueChanged;
+            // 
+            // txtCountTest
+            // 
+            txtCountTest.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtCountTest.DecimalPlaces = 1;
+            txtCountTest.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
+            txtCountTest.Location = new Point(109, 344);
+            txtCountTest.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            txtCountTest.Name = "txtCountTest";
+            txtCountTest.Size = new Size(202, 23);
+            txtCountTest.TabIndex = 5;
+            txtCountTest.Value = new decimal(new int[] { 15, 0, 0, 65536 });
+            txtCountTest.ValueChanged += txtCountTest_ValueChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(61, 317);
+            label6.Name = "label6";
+            label6.Size = new Size(42, 15);
+            label6.TabIndex = 2;
+            label6.Text = "Score :";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(35, 346);
+            label7.Name = "label7";
+            label7.Size = new Size(69, 15);
+            label7.TabIndex = 2;
+            label7.Text = "Count Test :";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(317, 323);
+            label8.Name = "label8";
+            label8.Size = new Size(17, 15);
+            label8.TabIndex = 2;
+            label8.Text = "%";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(317, 346);
+            label9.Name = "label9";
+            label9.Size = new Size(25, 15);
+            label9.TabIndex = 2;
+            label9.Text = "Sec";
+            // 
             // Options
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(358, 346);
+            ClientSize = new Size(358, 396);
+            Controls.Add(txtCountTest);
+            Controls.Add(txtScore);
+            Controls.Add(label7);
+            Controls.Add(label9);
+            Controls.Add(label8);
+            Controls.Add(label6);
             Controls.Add(statusStrip1);
             Controls.Add(IsAllowSendData);
             Controls.Add(groupBox2);
@@ -200,6 +285,8 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)txtKeyNGDelay).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtScore).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtCountTest).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -219,5 +306,11 @@
         private StatusStrip statusStrip1;
         private NumericUpDown txtClearDelay;
         private NumericUpDown txtKeyNGDelay;
+        private NumericUpDown txtScore;
+        private NumericUpDown txtCountTest;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
     }
 }

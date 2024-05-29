@@ -140,8 +140,10 @@ namespace PJ24_010_Auto_Focus_CCD
                 {
                     // Process data
                     Debug.WriteLine("Data: " + string.Join(",", _data_extract));
-                    this.lbVoltage.Text = _data_extract[0] + " V";
-                    this.lbCurrent.Text = _data_extract[1] + " mA";
+                    this.lbVoltage.Text = (double.Parse(_data_extract[0]) < 0 ? "0.00": _data_extract[0]) + " V";
+                    this.lbCurrent.Text = (double.Parse(_data_extract[1]) < 0? "0.00": _data_extract[1]) + " mA";
+                    this.currentVoltage = double.Parse(_data_extract[0]) < 0 ? 0.00 : double.Parse(_data_extract[0]);
+                    this.currentCurrent = double.Parse(_data_extract[1]) < 0 ? 0.00 : double.Parse(_data_extract[1]);
                 }
                 serialDataStatus = SerialStatus.Received;
             }

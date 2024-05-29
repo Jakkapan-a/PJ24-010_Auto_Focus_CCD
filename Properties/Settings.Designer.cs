@@ -106,5 +106,17 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
                 this["Score"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int CountDownStart {
+            get {
+                return ((int)(this["CountDownStart"]));
+            }
+            set {
+                this["CountDownStart"] = value;
+            }
+        }
     }
 }

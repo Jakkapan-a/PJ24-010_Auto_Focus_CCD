@@ -17,7 +17,8 @@ namespace PJ24_010_Auto_Focus_CCD
     {
         private int onnx_model_id = -1;
         private Product? product;
-
+        private double currentVoltage = 0;
+        private double currentCurrent = 0;
         private System.Windows.Forms.Timer timerCountStart = new System.Windows.Forms.Timer();
         IDeserializer deserializer;
         IPredictor predictor;
@@ -47,7 +48,7 @@ namespace PJ24_010_Auto_Focus_CCD
          */
         private ProcessStatus processStatus = ProcessStatus.none;
         Product? _product = null;
-        Dictionary<string, int> templatePredictor = new Dictionary<string, int>();
+        Dictionary<string, ItemResults> templatePredictor = new Dictionary<string, ItemResults>();
         private async void ProcessValidatedData()
         {
             try
@@ -56,20 +57,24 @@ namespace PJ24_010_Auto_Focus_CCD
                 lbTitle.ForeColor = Color.Black;
                 lbTitle.BackColor = Color.YellowGreen;
                 await Task.Delay(500);
+                txtLog.Text = "";
                 // Validate Data 
                 string txtQr = this.txtQr.Text;
+                SetLog("QR Code: " + txtQr);
                 // 721TMCHxxxxxxx
                 // Slice the QR code to get the product name
                 string productName = txtQr.Substring(0, 7);
+
+                SetLog("Sort Name: " + productName);
+
                 Debug.WriteLine("Product Name: " + productName);
 
                 _product = Product.Get(productName);
+                SetLog("Is Found: " + (_product != null ? "Yes" : "No"));
+
                 if (_product != null)
                 {
-                    
                     this.txtQr.ReadOnly = true;
-
-
                     if (_product.onnx_model_id != onnx_model_id)
                     {
                         // Load model
@@ -98,9 +103,14 @@ namespace PJ24_010_Auto_Focus_CCD
                         {
                             if (!templatePredictor.ContainsKey(item.name))
                             {
-                                templatePredictor.Add(item.name, 0);
+                                templatePredictor.Add(item.name, ItemResults.none);
                             }
                         }
+
+                        SetLog("Load Model: " + onnx.name );
+                        SetLog("Load Label: " + onnx.path_label);
+                        SetLog("Load Template: " + onnx.path_label + "\n");
+
                     }
                   
                     this.product = _product;
@@ -109,18 +119,17 @@ namespace PJ24_010_Auto_Focus_CCD
                     this.lbTitle.ForeColor = Color.Black;
 
                     string _dataSerialType = $"RAY:{(product.type == 1 ? "PVM1" : "NOT1")}";
+                    SetLog("Send Data: " + _dataSerialType);
+                    
                     this.SendDataBuffer(_dataSerialType);
-
                     // Clear template predictor to 0
                     foreach (var item in templatePredictor)
                     {
-                        templatePredictor[item.Key] = 0;
+                        templatePredictor[item.Key] = ItemResults.none;
                     }
                     this.txtQr.ReadOnly = false;
                     this.ActiveControl = this.txtQr;
                     this.txtQr.Focus();
-
-                    //StartProcess();
                 }
                 else
                 {
@@ -179,15 +188,18 @@ namespace PJ24_010_Auto_Focus_CCD
             }
             // Code...
             // Count 1.5 sec for test
-            countDownStart = 15;
+            countDownStart = Properties.Settings.Default.CountDownStart;
             timerCountStart.Start();
         }
-        private bool isClone = false;
+        private bool isClone = false; // Clone ImagePredict
+        private const string OK_SUFFIX = "_OK";
+        private const string NG_SUFFIX = "_NG";
         private async void TestProcess()
         {
             // code...
             await Task.Run(() =>
             {
+                SetLog("+++ Start Testing +++");
                 isClone = false;
                 int count_error = 20;
                 while (!isClone)
@@ -199,36 +211,113 @@ namespace PJ24_010_Auto_Focus_CCD
                         break;
                     }
                 }
-
                 if (count_error < 0)
                 {
                     processStatus = ProcessStatus.error;
                     return;
                 }
 
-
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 // Process Prediction
                 predictions = predictor.Predict(imagePredict);
+                stopwatch.Stop();
+                SetLog("Prediction Time: " + stopwatch.ElapsedMilliseconds + "ms\n");
                 // Validate
                 Debug.WriteLine(predictions);
                 if(predictions != null )
                 {
+                    foreach (var prediction in predictions)
+                    {
+                        string? labelName = prediction?.Label?.Name;
+                        if(labelName == null) continue;
+                        if(prediction.Score < Properties.Settings.Default.Score)
+                        {
+                            continue;
+                        }
+                        string baseName = System.Text.RegularExpressions.Regex.Replace(labelName, $"({OK_SUFFIX}|{NG_SUFFIX})", "", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
+                        if (templatePredictor.ContainsKey(baseName))
+                        {
+                            if (labelName.Contains(OK_SUFFIX, StringComparison.OrdinalIgnoreCase))
+                            {
+                                templatePredictor[baseName] = ItemResults.pass;
+                            }
+                            else if (labelName.Contains(NG_SUFFIX, StringComparison.OrdinalIgnoreCase))
+                            {
+                                templatePredictor[baseName] = ItemResults.fail;
+                            }
+
+                            SetLog($"Check : {baseName} = {(templatePredictor[baseName] == ItemResults.pass ? "PASS" : "NG") }");
+                        }
+                    }
+                }
+
+                // Check Template
+                bool isPass = true;
+                foreach (var item in templatePredictor)
+                {
+                    if(item.Value == ItemResults.none)
+                    {
+                        isPass = false;
+                        break;
+                    }else if(item.Value == ItemResults.fail)
+                    {
+                        isPass = false;
+                        break;
+                    }
+                }
+
+                // Check Voltage and Current
+                if(this.currentVoltage < (product?.voltage_min/1000) || this.currentVoltage > (product?.voltage_max/1000))
+                {
+                    isPass = false;
+                    SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min/1000}-{product?.voltage_max/1000}V - Out of range");
+                }else{
+                    SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min/1000}-{product?.voltage_max/1000}V - OK");
+                }
+
+                if(this.currentCurrent < (product?.current_min/1000) || this.currentCurrent > (product?.current_max/1000))
+                {
+                    isPass = false;
+                    SetLog($"Current: {this.currentCurrent}A - {product?.current_min/1000}-{product?.current_max/1000}mA - Out of range");
+                }else{
+                    SetLog($"Current: {this.currentCurrent}A - {product?.current_min/1000}-{product?.current_max/1000}mA - OK");
+                }
+
+                if (isPass)
+                {
+                    processStatus = ProcessStatus.pass;
+                }
+                else
+                {
+                    processStatus = ProcessStatus.fail;
                 }
             });
 
+            SetLog("+++ Test Completed +++");
             if (processStatus == ProcessStatus.error)
             {
                 this.lbTitle.Text = "ERROR - " + product?.name;
                 this.lbTitle.ForeColor = Color.White;
                 this.lbTitle.BackColor = Color.Red;
+                SetLog("+++ ERROR +++");
                 return;
             }
-            // Pass
-            this.lbTitle.Text = "PASS - " + product?.name;
-            this.lbTitle.ForeColor = Color.White;
-            this.lbTitle.BackColor = Color.Green;
-            processStatus = ProcessStatus.pass;
+            if(processStatus == ProcessStatus.pass)
+            {
+                this.lbTitle.Text = "PASS";
+                this.lbTitle.ForeColor = Color.White;
+                this.lbTitle.BackColor = Color.Green;
+                SetLog("+++ PASS +++");
+            }else{
+                this.lbTitle.Text = "NG";
+                this.lbTitle.ForeColor = Color.White;
+                this.lbTitle.BackColor = Color.Red;
+                SetLog("+++ NG +++");
+            }
+
+            // Save Image and Data
         }
 
         private void StopProcess()
@@ -258,6 +347,10 @@ namespace PJ24_010_Auto_Focus_CCD
             processStatus = ProcessStatus.ready;
             string _dataSerialType = $"RAY:RST";
             this.SendDataBuffer(_dataSerialType);
+            // Save Log
+            // txtLog.Text.SaveLog("log.txt");
+            // Clear log
+            txtLog.Text = "";
         }
         private bool togglePause = false;
         private void TimerOnSecond_Tick(object? sender, EventArgs e)
@@ -290,7 +383,20 @@ namespace PJ24_010_Auto_Focus_CCD
             }
         }
 
-
+        private void SetLog(string message)
+        {
+            if(txtLog.InvokeRequired)
+            {
+                txtLog.Invoke(new Action(() =>
+                {
+                    txtLog.Text += message + "\n";
+                }));
+            }
+            else
+            {
+                txtLog.Text += message + "\n";
+            }
+        }
     }
 
     public enum ProcessStatus
@@ -307,10 +413,10 @@ namespace PJ24_010_Auto_Focus_CCD
         fail, // NG
     }
 
-    public enum ItemsResutls
+    public enum ItemResults
     {
         none,
         pass,
-        fail
+        fail // NG
     }
 }

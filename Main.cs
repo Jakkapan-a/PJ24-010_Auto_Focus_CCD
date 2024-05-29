@@ -295,12 +295,5 @@ namespace PJ24_010_Auto_Focus_CCD
             }
             button.Enabled = true;
         }
-
-        const string OK_TEXT = "ok";
-        const string NG_TEXT = "ng";
-        private void pictureBox_Paint(object sender, PaintEventArgs e)
-        {
-           
-        }
     }
 }
