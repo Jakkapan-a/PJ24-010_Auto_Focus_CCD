@@ -129,6 +129,15 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ./system/images/predict.
+        /// </summary>
+        internal static string path_predict {
+            get {
+                return ResourceManager.GetString("path_predict", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Spinner_1s_800px {

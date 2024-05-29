@@ -11,7 +11,13 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public int id { get; set; }
         public string employee { get; set; }
         public string qr_code { get; set; }
-        public string image_file { get; set; }
+        public string path_folder { get; set; }
+        public int product_id { get; set; }
+        public int voltage { get; set; }
+        public int current { get; set; }
+        public int onnx_model_id { get; set; } // model id 
+        public string result { get; set; }
+        public string re_judgment { get; set; }
         public string created_at { get; set; }
         public string updated_at { get; set; }
 
@@ -24,7 +30,13 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
                     id INTEGER NOT NULL,
                     employee TEXT,
                     qr_code TEXT,
-                    image_file TEXT,
+                    path_folder TEXT,
+                    product_id INTEGER,
+                    voltage INTEGER,
+                    current INTEGER,
+                    onnx_model_id INTEGER,
+                    result TEXT,
+                    re_judgment TEXT,
                     created_at TEXT,
                     updated_at TEXT,
                     PRIMARY KEY(id AUTOINCREMENT)
@@ -45,7 +57,14 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             {
                 { "@employee", this.employee },
                 { "@qr_code", this.qr_code },
-                { "@image_file", this.image_file },
+                { "@path_folder", this.path_folder },
+                { "@product_id", this.product_id },
+                { "@voltage", this.voltage },
+                { "@current", this.current },
+                { "@onnx_model_id", this.onnx_model_id },
+                { "@result", this.result },
+                { "@re_judgment", this.re_judgment },
+                { "@created_at", this.created_at },
                 { "@created_at", this.created_at },
                 { "@updated_at", SQLite.SQliteDataAccess.GetDateTimeNow() }
             };
@@ -54,8 +73,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public void Save()
         {
             string sql = @"
-                INSERT INTO history (employee, qr_code, image_file, created_at, updated_at)
-                VALUES (@employee, @qr_code, @image_file, @created_at, @updated_at);
+                INSERT INTO history (employee, qr_code, path_folder, product_id, voltage, current, onnx_model_id, result, re_judgment, created_at, updated_at)
+                VALUES (@employee, @qr_code, @path_folder, @product_id, @voltage, @current, @onnx_model_id, @result, @re_judgment, @created_at, @updated_at);
             ";
             Dictionary<string, object> parameters = CreateParameters();
             parameters["@created_at"] = SQLite.SQliteDataAccess.GetDateTimeNow();
@@ -65,14 +84,11 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public void Update()
         {
             string sql = @"
-                UPDATE history
-                SET employee = @employee,
-                    qr_code = @qr_code,
-                    image_file = @image_file,
-                    updated_at = @updated_at
+                UPDATE history SET employee = @employee, qr_code = @qr_code, path_folder = @path_folder, product_id = @product_id, voltage = @voltage, current = @current, onnx_model_id = @onnx_model_id, result = @result, re_judgment = @re_judgment, updated_at = @updated_at
                 WHERE id = @id;
             ";
             Dictionary<string, object> parameters = CreateParameters();
+            parameters["@id"] = this.id;
             parameters["@updated_at"] = SQLite.SQliteDataAccess.GetDateTimeNow();
             SQLite.SQliteDataAccess.Execute(sql, parameters);
         }

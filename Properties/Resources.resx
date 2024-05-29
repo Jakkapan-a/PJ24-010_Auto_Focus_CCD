@@ -142,4 +142,7 @@
   <data name="path_image" xml:space="preserve">
     <value>./system/images</value>
   </data>
+  <data name="path_predict" xml:space="preserve">
+    <value>./system/images/predict</value>
+  </data>
 </root>

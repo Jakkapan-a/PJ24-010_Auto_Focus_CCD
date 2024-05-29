@@ -194,6 +194,7 @@ namespace PJ24_010_Auto_Focus_CCD
         private bool isClone = false; // Clone ImagePredict
         private const string OK_SUFFIX = "_OK";
         private const string NG_SUFFIX = "_NG";
+        private string pathFolder = "";
         private async void TestProcess()
         {
             // code...
@@ -318,6 +319,28 @@ namespace PJ24_010_Auto_Focus_CCD
             }
 
             // Save Image and Data
+            string date = DateTime.Now.ToString("yyyyMMdd");
+            string time = DateTime.Now.ToString("HHmmss");
+            
+            // check folder
+            pathFolder = Path.Combine(Properties.Resources.path_predict, date, $"{txtQr.Text}_{time}");
+            if (!Directory.Exists(pathFolder))
+            {
+                Directory.CreateDirectory(pathFolder);
+            }
+
+            // Save Image
+            string pathImage = Path.Combine(pathFolder, "ORG_"+ Guid.NewGuid().ToString().Replace("-","_") + ".jpg");
+            imagePredict.Save(pathImage, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            using(Image img = (Bitmap)imagePredict.Clone())
+            {
+                DrawImages.DrawBoxes(img, predictions);
+                string pathImagePredict = Path.Combine(pathFolder, "PREDICT_" + Guid.NewGuid().ToString().Replace("-", "_") + ".jpg");
+                img.Save(pathImagePredict, System.Drawing.Imaging.ImageFormat.Jpeg);
+                img?.Dispose();
+            }
+
         }
 
         private void StopProcess()
@@ -330,8 +353,16 @@ namespace PJ24_010_Auto_Focus_CCD
                 this.lbTitle.ForeColor = Color.Black;
                 return;
             }
-            // Save Data
 
+             if (!Directory.Exists(pathFolder))
+            {
+                Directory.CreateDirectory(pathFolder);
+            }
+
+            // Save Data
+            string pathData = Path.Combine(pathFolder, "log.txt");
+            txtLog.SaveFile(pathData);
+            
             // Title
             this.lbTitle.Text = "Ready";
             this.lbTitle.ForeColor = Color.Black;
