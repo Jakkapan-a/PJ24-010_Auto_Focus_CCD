@@ -12,6 +12,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public string name { get; set; }
         public string path_model { get; set; }
         public string path_label { get; set; }
+        public string path_template { get; set; }
         public string created_at { get; set; }
         public string updated_at { get; set; }
 
@@ -25,6 +26,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             `name` TEXT NOT NULL,
             `path_model` TEXT NOT NULL,
             `path_label` TEXT NOT NULL,
+            `path_template` TEXT NOT NULL,
             `created_at` TEXT NOT NULL,
             `updated_at` TEXT NOT NULL,
             PRIMARY KEY(`id` AUTOINCREMENT));
@@ -46,6 +48,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
                 { "@name", this.name },
                 { "@path_model", this.path_model },
                 { "@path_label", this.path_label },
+                { "@path_template",this.path_template},
                 { "@created_at", this.created_at },
                 { "@updated_at",  SQLite.SQliteDataAccess.GetDateTimeNow() }
             };
@@ -53,8 +56,8 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
 
         public void Save(){
             string sql = @"
-            INSERT INTO onnx_model (name, path_model, path_label, created_at, updated_at)
-            VALUES (@name, @path_model, @path_label, @created_at, @updated_at);
+            INSERT INTO onnx_model (name, path_model, path_label,path_template, created_at, updated_at)
+            VALUES (@name, @path_model, @path_label, @path_template, @created_at, @updated_at);
             ";
             Dictionary<string, object> parameters = CreateParameters();
             parameters["@created_at"] =  SQLite.SQliteDataAccess.GetDateTimeNow();
@@ -63,7 +66,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
 
         public void Update(){
             string sql = @"
-            UPDATE onnx_model SET name = @name, path_model = @path_model, path_label = @path_label, updated_at = @updated_at
+            UPDATE onnx_model SET name = @name, path_model = @path_model, path_label = @path_label, path_template = @path_template, updated_at = @updated_at
             WHERE id = @id;
             ";
             Dictionary<string, object> parameters = CreateParameters();

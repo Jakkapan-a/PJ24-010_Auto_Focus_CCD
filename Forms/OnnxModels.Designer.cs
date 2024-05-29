@@ -54,6 +54,9 @@
             lbPage = new Label();
             txtDetailLabel = new RichTextBox();
             label5 = new Label();
+            btnTemplate = new Button();
+            txtTemplate = new TextBox();
+            template = new Label();
             statusStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -87,14 +90,17 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(btnTemplate);
             groupBox1.Controls.Add(btnLabel);
             groupBox1.Controls.Add(btnDelete);
             groupBox1.Controls.Add(btnNew);
             groupBox1.Controls.Add(btnSave);
             groupBox1.Controls.Add(btnOnnx);
+            groupBox1.Controls.Add(txtTemplate);
             groupBox1.Controls.Add(txtLabel);
             groupBox1.Controls.Add(txtOnnx);
             groupBox1.Controls.Add(txtName);
+            groupBox1.Controls.Add(template);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
@@ -196,7 +202,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(40, 119);
+            label3.Location = new Point(40, 123);
             label3.Name = "label3";
             label3.Size = new Size(35, 15);
             label3.TabIndex = 0;
@@ -350,6 +356,36 @@
             label5.TabIndex = 5;
             label5.Text = "Details";
             // 
+            // btnTemplate
+            // 
+            btnTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnTemplate.Enabled = false;
+            btnTemplate.Location = new Point(1083, 148);
+            btnTemplate.Name = "btnTemplate";
+            btnTemplate.Size = new Size(37, 23);
+            btnTemplate.TabIndex = 3;
+            btnTemplate.Text = "...";
+            btnTemplate.UseVisualStyleBackColor = true;
+            btnTemplate.Click += btnTemplate_Click;
+            // 
+            // txtTemplate
+            // 
+            txtTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTemplate.Location = new Point(81, 148);
+            txtTemplate.Name = "txtTemplate";
+            txtTemplate.ReadOnly = true;
+            txtTemplate.Size = new Size(996, 23);
+            txtTemplate.TabIndex = 1;
+            // 
+            // template
+            // 
+            template.AutoSize = true;
+            template.Location = new Point(20, 152);
+            template.Name = "template";
+            template.Size = new Size(55, 15);
+            template.TabIndex = 0;
+            template.Text = "Template";
+            // 
             // OnnxModels
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -407,5 +443,8 @@
         private TextBox txtSearch;
         private Label label6;
         private ToolStripStatusLabel toolStripStatusLabel;
+        private Button btnTemplate;
+        private TextBox txtTemplate;
+        private Label template;
     }
 }
