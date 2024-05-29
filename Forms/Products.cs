@@ -24,7 +24,6 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
         private void Products_Load(object sender, EventArgs e)
         {
             cbType.SelectedIndex = 0;
-
             RenderTable();
         }
 

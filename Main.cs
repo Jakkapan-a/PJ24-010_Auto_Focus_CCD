@@ -317,9 +317,12 @@ namespace PJ24_010_Auto_Focus_CCD
             notification.ShowNotification("Change to PASS", 4000);
         }
 
-        private void parameterToolStripMenuItem_Click(object sender, EventArgs e)
+        private Historys _historys;
+        private void historyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            _historys?.Dispose();
+            _historys = new Historys();
+            _historys.Show();
         }
     }
 }

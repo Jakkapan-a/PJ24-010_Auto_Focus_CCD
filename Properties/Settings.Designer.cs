@@ -118,5 +118,17 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
                 this["CountDownStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsUseDate {
+            get {
+                return ((bool)(this["IsUseDate"]));
+            }
+            set {
+                this["IsUseDate"] = value;
+            }
+        }
     }
 }

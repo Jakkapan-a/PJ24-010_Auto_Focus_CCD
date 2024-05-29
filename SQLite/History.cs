@@ -13,6 +13,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
         public string qr_code { get; set; }
         public string path_folder { get; set; }
         public int product_id { get; set; }
+        public string model_name { get; set; } = "";
         public int voltage { get; set; }
         public int current { get; set; }
         public int onnx_model_id { get; set; } // model id 
@@ -32,6 +33,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
                     qr_code TEXT,
                     path_folder TEXT,
                     product_id INTEGER,
+                    model_name TEXT,
                     voltage INTEGER,
                     current INTEGER,
                     onnx_model_id INTEGER,
@@ -59,6 +61,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
                 { "@qr_code", this.qr_code },
                 { "@path_folder", this.path_folder },
                 { "@product_id", this.product_id },
+                { "@model_name", this.model_name },
                 { "@voltage", this.voltage },
                 { "@current", this.current },
                 { "@onnx_model_id", this.onnx_model_id },
@@ -114,74 +117,35 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             return SQLite.SQliteDataAccess.Query<History>(sql, parameters).FirstOrDefault() ?? null;
         }
 
-        public static int Count(string employee = "", string qr_code = "")
-        {
-            string sql = @"
-                SELECT COUNT(*) FROM history";
-            
-            if(!string.IsNullOrEmpty(employee) || !string.IsNullOrEmpty(qr_code))
-            {
-                sql += " WHERE ";
-                if(!string.IsNullOrEmpty(employee))
-                {
-                    sql += "employee = @employee";
-                }
-                if(!string.IsNullOrEmpty(qr_code))
-                {
-                    if(!string.IsNullOrEmpty(employee))
-                    {
-                        sql += " AND ";
-                    }
-                    sql += "qr_code = @qr_code";
-                }
-            }
+         public static int Count(string employee = "",  string model_name = "", string qr_code = "", string result = "", string re_judgment = "", string date = "")
+         {
+            string sql = "SELECT COUNT(*) FROM history WHERE employee LIKE @employee AND model_name LIKE @model_name AND qr_code LIKE @qr_code AND result LIKE @result AND re_judgment LIKE @re_judgment AND created_at LIKE @date";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if(!string.IsNullOrEmpty(employee))
-            {
-                parameters["@employee"] = employee;
-            }
-            if(!string.IsNullOrEmpty(qr_code))
-            {
-                parameters["@qr_code"] = qr_code;
-            }
+            parameters["@employee"] = @"%" + employee + @"%";
+            parameters["@model_name"] = @"%" + model_name + @"%";
+            parameters["@qr_code"] = @"%" + qr_code + @"%";
+            parameters["@result"] = @"%" + result + @"%";
+            parameters["@re_judgment"] = @"%" + re_judgment + @"%";
+            parameters["@date"] = @"%" + date + @"%";
+            return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault();
+         }
 
-            return SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault();
-        }
-
-        public static List<History> Search(string employee = "", string qr_code = "", int start =0 , int limit = 100, string order_by = " id desc")
+        public static List<History> Search(string employee = "", string model_name = "", string qr_code = "", string result = "", string re_judgment = "", string date = "", int start = 0, int limit = 100, string order_by = " id desc")
         {
-            string sql = @"
-                SELECT * FROM history";
-            
-            if(!string.IsNullOrEmpty(employee) || !string.IsNullOrEmpty(qr_code))
-            {
-                sql += " WHERE ";
-                if(!string.IsNullOrEmpty(employee))
-                {
-                    sql += "employee = @employee";
-                }
-                if(!string.IsNullOrEmpty(qr_code))
-                {
-                    if(!string.IsNullOrEmpty(employee))
-                    {
-                        sql += " AND ";
-                    }
-                    sql += "qr_code = @qr_code";
-                }
-            }
-            sql += " ORDER BY " + order_by + " LIMIT @start, @limit";
+            string sql = "SELECT * FROM history WHERE employee LIKE @employee AND model_name LIKE @model_name AND qr_code LIKE @qr_code AND result LIKE @result AND re_judgment LIKE @re_judgment AND created_at LIKE @date ORDER BY @order_by LIMIT @start, @limit";
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if(!string.IsNullOrEmpty(employee))
-            {
-                parameters["@employee"] = employee;
-            }
-            if(!string.IsNullOrEmpty(qr_code))
-            {
-                parameters["@qr_code"] = qr_code;
-            }
+            parameters["@employee"] = @"%" + employee + @"%";
+            parameters["@model_name"] = @"%" + model_name + @"%";
+            parameters["@qr_code"] = @"%" + qr_code + @"%";
+            parameters["@result"] = @"%" + result + @"%";
+            parameters["@re_judgment"] = @"%" + re_judgment + @"%";
+            parameters["@date"] = @"%" + date + @"%";
             parameters["@start"] = start;
             parameters["@limit"] = limit;
+            parameters["@order_by"] = order_by;
+            
             return SQLite.SQliteDataAccess.Query<History>(sql, parameters);
         }
+       
     }
 }

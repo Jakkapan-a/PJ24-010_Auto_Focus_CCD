@@ -1,4 +1,5 @@
 ﻿using Emgu.CV.Dnn;
+using PJ24_010_Auto_Focus_CCD.Forms;
 using PJ24_010_Auto_Focus_CCD.SQLite;
 using PJ24_010_Auto_Focus_CCD.Utilities;
 using System;
@@ -61,7 +62,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 await Task.Delay(500);
                 txtLog.Text = "";
                 this.history.re_judgment = "Null";
-            
+
                 // Validate Data 
                 string txtQr = this.txtQr.Text;
                 SetLog("QR Code: " + txtQr);
@@ -95,7 +96,7 @@ namespace PJ24_010_Auto_Focus_CCD
                         predictor = YoloV5Predictor.Create(pathModel, labels);
 
                         string pathTemplate = Path.Combine(Properties.Resources.path_models, onnx.path_template);
-                        if(!File.Exists(pathTemplate))
+                        if (!File.Exists(pathTemplate))
                         {
                             throw new Exception("Template not found");
                         }
@@ -111,17 +112,18 @@ namespace PJ24_010_Auto_Focus_CCD
                             }
                         }
 
-                        SetLog("Load Model: " + onnx.name );
+                        SetLog("Load Model: " + onnx.name);
                         SetLog("Load Label: " + onnx.path_label);
                         SetLog("Load Template: " + onnx.path_label + "\n");
 
                     }
-                  
+
                     this.product = _product;
                     history.product_id = this.product.id;
                     history.employee = txtEmp.Text;
                     history.qr_code = txtQr;
                     history.onnx_model_id = product.onnx_model_id;
+                    history.model_name = product.name;
 
                     processStatus = ProcessStatus.wait_start;
                     this.lbTitle.Text = _product.name + " - Wait Testing";
@@ -129,7 +131,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
                     string _dataSerialType = $"RAY:{(product.type == 1 ? "PVM1" : "NOT1")}";
                     SetLog("Send Data: " + _dataSerialType);
-                    
+
                     this.SendDataBuffer(_dataSerialType);
                     // Clear template predictor to 0
                     foreach (var item in templatePredictor)
@@ -184,10 +186,12 @@ namespace PJ24_010_Auto_Focus_CCD
             {
                 // MessageBox.Show("Invalid Process, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string message = "QR Code Invalid, Please scan again";
-                if(txtQr.Text.Length > 0)
+                if (txtQr.Text.Length > 0)
                 {
                     message = "Please wait for the current process to finish";
-                }else{
+                }
+                else
+                {
                     message = "QR Code is empty!, Please scan again";
                 }
                 this.lbTitle.Text = message;
@@ -203,11 +207,11 @@ namespace PJ24_010_Auto_Focus_CCD
         private bool isClone = false; // Clone ImagePredict
         private const string OK_SUFFIX = "_OK";
         private const string NG_SUFFIX = "_NG";
-        private string pathFolder = "";  
+        private string pathFolder = "";
         private Stopwatch stopwatchTestProcess = new Stopwatch();
-               
+
         private async void TestProcess()
-        { 
+        {
             stopwatchTestProcess.Restart();
             // code...
             await Task.Run(async () =>
@@ -230,7 +234,7 @@ namespace PJ24_010_Auto_Focus_CCD
                     return;
                 }
 
-              
+
                 // Process Prediction
                 predictions = predictor.Predict(imagePredict);
                 // stopwatchTestProcess.Stop();
@@ -238,13 +242,13 @@ namespace PJ24_010_Auto_Focus_CCD
                 // stopwatchTestProcess.Start();
                 // Validate
                 Debug.WriteLine(predictions);
-                if(predictions != null )
+                if (predictions != null)
                 {
                     foreach (var prediction in predictions)
                     {
                         string? labelName = prediction?.Label?.Name;
-                        if(labelName == null) continue;
-                        if(prediction.Score < Properties.Settings.Default.Score)
+                        if (labelName == null) continue;
+                        if (prediction.Score < Properties.Settings.Default.Score)
                         {
                             continue;
                         }
@@ -261,7 +265,7 @@ namespace PJ24_010_Auto_Focus_CCD
                                 templatePredictor[baseName] = ItemResults.fail;
                             }
 
-                            SetLog($"Check : {baseName} = {(templatePredictor[baseName] == ItemResults.pass ? "PASS" : "NG") }");
+                            SetLog($"Check : {baseName} = {(templatePredictor[baseName] == ItemResults.pass ? "PASS" : "NG")}");
                         }
                     }
                 }
@@ -271,12 +275,13 @@ namespace PJ24_010_Auto_Focus_CCD
                 bool isResultNone = false;
                 foreach (var item in templatePredictor)
                 {
-                    if(item.Value == ItemResults.none)
+                    if (item.Value == ItemResults.none)
                     {
                         isPass = false;
                         isResultNone = true;
                         SetLog($"Check : {item.Key} = NULL");
-                    }else if(item.Value == ItemResults.fail)
+                    }
+                    else if (item.Value == ItemResults.fail)
                     {
                         isPass = false;
                     }
@@ -287,20 +292,24 @@ namespace PJ24_010_Auto_Focus_CCD
                 history.voltage = (int)(currentVoltage * 1000);
                 history.current = (int)(currentCurrent * 1000);
                 // Check Voltage and Current
-                if (this.currentVoltage < (product?.voltage_min/1000) || this.currentVoltage > (product?.voltage_max/1000))
+                if (this.currentVoltage < (product?.voltage_min / 1000) || this.currentVoltage > (product?.voltage_max / 1000))
                 {
                     isPass = false;
-                    SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min/1000}-{product?.voltage_max/1000}V - Out of range");
-                }else{
-                    SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min/1000}-{product?.voltage_max/1000}V - OK");
+                    SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min / 1000}-{product?.voltage_max / 1000}V - Out of range");
+                }
+                else
+                {
+                    SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min / 1000}-{product?.voltage_max / 1000}V - OK");
                 }
 
-                if(this.currentCurrent < (product?.current_min/1000) || this.currentCurrent > (product?.current_max/1000))
+                if (this.currentCurrent < (product?.current_min / 1000) || this.currentCurrent > (product?.current_max / 1000))
                 {
                     isPass = false;
-                    SetLog($"Current: {this.currentCurrent}A - {product?.current_min/1000}-{product?.current_max/1000}mA - Out of range");
-                }else{
-                    SetLog($"Current: {this.currentCurrent}A - {product?.current_min/1000}-{product?.current_max/1000}mA - OK");
+                    SetLog($"Current: {this.currentCurrent}A - {product?.current_min / 1000}-{product?.current_max / 1000}mA - Out of range");
+                }
+                else
+                {
+                    SetLog($"Current: {this.currentCurrent}A - {product?.current_min / 1000}-{product?.current_max / 1000}mA - OK");
                 }
 
                 if (isPass)
@@ -318,7 +327,7 @@ namespace PJ24_010_Auto_Focus_CCD
                     processStatus = ProcessStatus.fail;
                     history.result = "NG";
                     // Send Data If Allow Send Data
-                    if(Properties.Settings.Default.IsAllowSendData && !isResultNone)
+                    if (Properties.Settings.Default.IsAllowSendData && !isResultNone)
                     {
                         string _dataSerialTypeKyeNG = $"KBD:{Properties.Settings.Default.KeyNG}";
                         this.SendDataBuffer(_dataSerialTypeKyeNG);
@@ -342,13 +351,15 @@ namespace PJ24_010_Auto_Focus_CCD
                 SetLog("+++ ERROR +++");
                 return;
             }
-            if(processStatus == ProcessStatus.pass)
+            if (processStatus == ProcessStatus.pass)
             {
                 this.lbTitle.Text = "PASS";
                 this.lbTitle.ForeColor = Color.White;
                 this.lbTitle.BackColor = Color.Green;
                 SetLog("+++ PASS +++");
-            }else{
+            }
+            else
+            {
                 this.lbTitle.Text = "NG";
                 this.lbTitle.ForeColor = Color.White;
                 this.lbTitle.BackColor = Color.Red;
@@ -369,10 +380,10 @@ namespace PJ24_010_Auto_Focus_CCD
             }
 
             // Save Image
-            string pathImage = Path.Combine(pathFolder, "ORG_"+ Guid.NewGuid().ToString().Replace("-","_") + ".jpg");
+            string pathImage = Path.Combine(pathFolder, "ORG_" + Guid.NewGuid().ToString().Replace("-", "_") + ".jpg");
             imagePredict.Save(pathImage, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-            using(Image img = (Bitmap)imagePredict.Clone())
+            using (Image img = (Bitmap)imagePredict.Clone())
             {
                 DrawImages.DrawBoxes(img, predictions);
                 string pathImagePredict = Path.Combine(pathFolder, "PREDICT_" + Guid.NewGuid().ToString().Replace("-", "_") + ".jpg");
@@ -394,7 +405,7 @@ namespace PJ24_010_Auto_Focus_CCD
                 return;
             }
 
-             if (!Directory.Exists(pathFolder))
+            if (!Directory.Exists(pathFolder))
             {
                 Directory.CreateDirectory(pathFolder);
             }
@@ -420,6 +431,9 @@ namespace PJ24_010_Auto_Focus_CCD
             processStatus = ProcessStatus.ready;
             string _dataSerialType = $"RAY:RST";
             this.SendDataBuffer(_dataSerialType);
+            // await Task.Delay(500);
+            _dataSerialType = $"LED:0";
+            this.SendDataBuffer(_dataSerialType);
             // Save Log
             // txtLog.Text.SaveLog("log.txt");
             // Clear log
@@ -436,7 +450,9 @@ namespace PJ24_010_Auto_Focus_CCD
 
                 // }
                 togglePause = !togglePause;
-            }else{
+            }
+            else
+            {
                 togglePause = true;
             }
         }
@@ -463,7 +479,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
         private void SetLog(string message)
         {
-            if(txtLog.InvokeRequired)
+            if (txtLog.InvokeRequired)
             {
                 txtLog.Invoke(new Action(() =>
                 {

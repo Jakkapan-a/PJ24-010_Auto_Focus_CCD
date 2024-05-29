@@ -70,6 +70,7 @@
             timer = new System.Windows.Forms.Timer(components);
             contextMenuStrip = new ContextMenuStrip(components);
             clearMESToolStripMenuItem = new ToolStripMenuItem();
+            historyToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -91,7 +92,7 @@
             // 
             // settingToolStripMenuItem
             // 
-            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oNNXToolStripMenuItem, modelsToolStripMenuItem, configurationToolStripMenuItem });
+            settingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oNNXToolStripMenuItem, historyToolStripMenuItem, modelsToolStripMenuItem, configurationToolStripMenuItem });
             settingToolStripMenuItem.Name = "settingToolStripMenuItem";
             settingToolStripMenuItem.Size = new Size(56, 20);
             settingToolStripMenuItem.Text = "Setting";
@@ -141,7 +142,6 @@
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
             parameterToolStripMenuItem.Size = new Size(167, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
-            parameterToolStripMenuItem.Click += parameterToolStripMenuItem_Click;
             // 
             // captureToolStripMenuItem
             // 
@@ -459,6 +459,14 @@
             clearMESToolStripMenuItem.Size = new Size(127, 22);
             clearMESToolStripMenuItem.Text = "Clear MES";
             // 
+            // historyToolStripMenuItem
+            // 
+            historyToolStripMenuItem.Image = Properties.Resources.history__1_;
+            historyToolStripMenuItem.Name = "historyToolStripMenuItem";
+            historyToolStripMenuItem.Size = new Size(180, 22);
+            historyToolStripMenuItem.Text = "History";
+            historyToolStripMenuItem.Click += historyToolStripMenuItem_Click;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -535,5 +543,6 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Button btnJdmPASS;
         private Button btnJdmNG;
+        private ToolStripMenuItem historyToolStripMenuItem;
     }
 }
