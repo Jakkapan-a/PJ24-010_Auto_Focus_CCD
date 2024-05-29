@@ -23,6 +23,8 @@ namespace PJ24_010_Auto_Focus_CCD
         IDeserializer deserializer;
         IPredictor predictor;
         private Prediction[]? predictions;
+
+        private History history;
         private void InitializeProcess()
         {
             timerCountStart?.Dispose();
@@ -33,7 +35,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
             deserializer = new DeserializerBuilder().Build();
             //IPredictor predictor = await Task.Run(() => { return YoloV5Predictor.Create(pathModel, classobjPredic); });
-
+            history = new History();
         }
 
 
@@ -58,6 +60,8 @@ namespace PJ24_010_Auto_Focus_CCD
                 lbTitle.BackColor = Color.YellowGreen;
                 await Task.Delay(500);
                 txtLog.Text = "";
+                this.history.re_judgment = "N";
+            
                 // Validate Data 
                 string txtQr = this.txtQr.Text;
                 SetLog("QR Code: " + txtQr);
@@ -114,6 +118,11 @@ namespace PJ24_010_Auto_Focus_CCD
                     }
                   
                     this.product = _product;
+                    history.product_id = this.product.id;
+                    history.employee = txtEmp.Text;
+                    history.qr_code = txtQr;
+                    history.onnx_model_id = product.onnx_model_id;
+
                     processStatus = ProcessStatus.wait_start;
                     this.lbTitle.Text = _product.name + " - Wait Testing";
                     this.lbTitle.ForeColor = Color.Black;
@@ -268,9 +277,12 @@ namespace PJ24_010_Auto_Focus_CCD
                         break;
                     }
                 }
+                SetLog("\n\n+++-------------+++");
 
+                history.voltage = (int)(currentVoltage * 1000);
+                history.current = (int)(currentCurrent * 1000);
                 // Check Voltage and Current
-                if(this.currentVoltage < (product?.voltage_min/1000) || this.currentVoltage > (product?.voltage_max/1000))
+                if (this.currentVoltage < (product?.voltage_min/1000) || this.currentVoltage > (product?.voltage_max/1000))
                 {
                     isPass = false;
                     SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min/1000}-{product?.voltage_max/1000}V - Out of range");
@@ -289,10 +301,12 @@ namespace PJ24_010_Auto_Focus_CCD
                 if (isPass)
                 {
                     processStatus = ProcessStatus.pass;
+                    history.result = "PASS";
                 }
                 else
                 {
                     processStatus = ProcessStatus.fail;
+                    history.result = "NG";
                 }
             });
 
@@ -321,7 +335,9 @@ namespace PJ24_010_Auto_Focus_CCD
             // Save Image and Data
             string date = DateTime.Now.ToString("yyyyMMdd");
             string time = DateTime.Now.ToString("HHmmss");
-            
+
+            history.path_folder = $"{txtQr.Text}_{time}";
+
             // check folder
             pathFolder = Path.Combine(Properties.Resources.path_predict, date, $"{txtQr.Text}_{time}");
             if (!Directory.Exists(pathFolder))
@@ -361,8 +377,10 @@ namespace PJ24_010_Auto_Focus_CCD
 
             // Save Data
             string pathData = Path.Combine(pathFolder, "log.txt");
-            txtLog.SaveFile(pathData);
-            
+            txtLog.SaveFile(pathData, RichTextBoxStreamType.PlainText);
+
+            history.Save();
+
             // Title
             this.lbTitle.Text = "Ready";
             this.lbTitle.ForeColor = Color.Black;
@@ -388,12 +406,14 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             if (processStatus == ProcessStatus.pass || processStatus == ProcessStatus.fail)
             {
-                //Debug.WriteLine("On Report");
-                if(predictions != null)
-                {
+                // //Debug.WriteLine("On Report");
+                // if(predictions != null)
+                // {
 
-                }
+                // }
                 togglePause = !togglePause;
+            }else{
+                togglePause = true;
             }
         }
         private int countDownStart = 15;

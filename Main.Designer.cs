@@ -44,6 +44,8 @@
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             panel1 = new Panel();
             lbDateTime = new Label();
+            btnJdmPASS = new Button();
+            btnJdmNG = new Button();
             lbVoltage = new Label();
             lbCurrent = new Label();
             txtLog = new RichTextBox();
@@ -173,6 +175,8 @@
             // panel1
             // 
             panel1.Controls.Add(lbDateTime);
+            panel1.Controls.Add(btnJdmPASS);
+            panel1.Controls.Add(btnJdmNG);
             panel1.Controls.Add(lbVoltage);
             panel1.Controls.Add(lbCurrent);
             panel1.Controls.Add(txtLog);
@@ -195,6 +199,32 @@
             lbDateTime.TabIndex = 4;
             lbDateTime.Text = "------------";
             lbDateTime.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // btnJdmPASS
+            // 
+            btnJdmPASS.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnJdmPASS.BackColor = Color.Lime;
+            btnJdmPASS.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnJdmPASS.Location = new Point(119, 659);
+            btnJdmPASS.Name = "btnJdmPASS";
+            btnJdmPASS.Size = new Size(75, 44);
+            btnJdmPASS.TabIndex = 4;
+            btnJdmPASS.Text = "PASS";
+            btnJdmPASS.UseVisualStyleBackColor = false;
+            btnJdmPASS.Click += btnJdmPASS_Click;
+            // 
+            // btnJdmNG
+            // 
+            btnJdmNG.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnJdmNG.BackColor = Color.FromArgb(255, 128, 128);
+            btnJdmNG.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnJdmNG.Location = new Point(12, 659);
+            btnJdmNG.Name = "btnJdmNG";
+            btnJdmNG.Size = new Size(75, 44);
+            btnJdmNG.TabIndex = 4;
+            btnJdmNG.Text = "NG";
+            btnJdmNG.UseVisualStyleBackColor = false;
+            btnJdmNG.Click += btnJdmNG_Click;
             // 
             // lbVoltage
             // 
@@ -225,7 +255,7 @@
             txtLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtLog.Location = new Point(7, 409);
             txtLog.Name = "txtLog";
-            txtLog.Size = new Size(191, 297);
+            txtLog.Size = new Size(191, 244);
             txtLog.TabIndex = 2;
             txtLog.Text = "";
             // 
@@ -494,5 +524,7 @@
         private ToolStripMenuItem clearMESToolStripMenuItem1;
         private ToolStripMenuItem captureToolStripMenuItem;
         private ToolStripStatusLabel toolStripStatusLabel1;
+        private Button btnJdmPASS;
+        private Button btnJdmNG;
     }
 }

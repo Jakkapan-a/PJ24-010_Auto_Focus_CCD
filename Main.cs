@@ -1,10 +1,12 @@
 using DirectShowLib;
 using PJ24_010_Auto_Focus_CCD.Forms;
+using PJ24_010_Auto_Focus_CCD.Helpers;
 using PJ24_010_Auto_Focus_CCD.SQLite;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static PJ24_010_Auto_Focus_CCD.Helpers.Notification;
 
 namespace PJ24_010_Auto_Focus_CCD
 {
@@ -29,6 +31,7 @@ namespace PJ24_010_Auto_Focus_CCD
             {
                 OnnxModel.CreateTable();
                 Product.CreateTable();
+                History.CreateTable();
             });
         }
 
@@ -100,7 +103,7 @@ namespace PJ24_010_Auto_Focus_CCD
                     await capture.StartAsync(deviceSelect);
 
                     // Connect serial port
-                  if(!SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString())))
+                    if (!SerialPortConnect(comPort.SelectedItem?.ToString(), int.Parse(comBaudRate.SelectedItem?.ToString())))
                     {
                         throw new Exception("Serial port not connected.");
                     }
@@ -145,7 +148,7 @@ namespace PJ24_010_Auto_Focus_CCD
                     is_connect = true;
                     lbTitle.Text = "Ready";
                     lbTitle.ForeColor = Color.Black;
-                    lbTitle.BackColor = Color.Yellow;                    
+                    lbTitle.BackColor = Color.Yellow;
                 }
                 else
                 {
@@ -294,6 +297,24 @@ namespace PJ24_010_Auto_Focus_CCD
                 });
             }
             button.Enabled = true;
+        }
+
+        private void btnJdmNG_Click(object sender, EventArgs e)
+        {
+            this.history.re_judgment = "NG";
+
+            Notification notification = new Notification();
+            notification.Type = NotificationType.Success;
+            notification.ShowNotification("Change to NG", 4000);
+        }
+
+        private void btnJdmPASS_Click(object sender, EventArgs e)
+        {
+            this.history.re_judgment = "PASS";
+
+            Notification notification = new Notification();
+            notification.Type = NotificationType.Success;
+            notification.ShowNotification("Change to PASS", 4000);
         }
     }
 }

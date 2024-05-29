@@ -65,7 +65,6 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
                 { "@result", this.result },
                 { "@re_judgment", this.re_judgment },
                 { "@created_at", this.created_at },
-                { "@created_at", this.created_at },
                 { "@updated_at", SQLite.SQliteDataAccess.GetDateTimeNow() }
             };
         }
