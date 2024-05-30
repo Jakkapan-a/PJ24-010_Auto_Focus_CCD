@@ -193,6 +193,12 @@ namespace PJ24_010_Auto_Focus_CCD
                 if(serialPort.IsOpen)
                 {
                     this.SendDataBuffer("CONN:1");
+
+                    string _dataSerialType = "LED:0";
+                    this.SendDataBuffer(_dataSerialType);
+
+                    _dataSerialType = $"RAY:RST";
+                    this.SendDataBuffer(_dataSerialType);
                 }
             }
             catch

@@ -346,7 +346,7 @@ void parseData(String dataInput)
       LED_GREEN.off();
       LED_BLUE.on();
       RESULT = 1;
-      buzzerPass.total = 1;
+      // buzzerPass.total = 1;
     }
     else
     {

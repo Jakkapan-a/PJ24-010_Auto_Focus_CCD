@@ -282,12 +282,20 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-
+            if(currentPage > 1)
+            {
+                currentPage--;
+                RenderTable();
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-
+            if(currentPage < totalPages)
+            {
+                currentPage++;
+                RenderTable();
+            }
         }
     }
 }

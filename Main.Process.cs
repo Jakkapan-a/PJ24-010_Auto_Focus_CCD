@@ -133,6 +133,11 @@ namespace PJ24_010_Auto_Focus_CCD
                     SetLog("Send Data: " + _dataSerialType);
 
                     this.SendDataBuffer(_dataSerialType);
+
+                    
+                    _dataSerialType = "LED:B";
+                    this.SendDataBuffer(_dataSerialType);
+                    
                     // Clear template predictor to 0
                     foreach (var item in templatePredictor)
                     {
@@ -198,6 +203,8 @@ namespace PJ24_010_Auto_Focus_CCD
                 return;
             }
             // Code...
+
+
             // Count 1.5 sec for test
             countDownStart = Properties.Settings.Default.CountDownStart;
             timerCountStart.Start();
@@ -392,7 +399,7 @@ namespace PJ24_010_Auto_Focus_CCD
             SetLog("End Process Time: " + stopwatchTestProcess.ElapsedMilliseconds + "ms\n");
         }
 
-        private void StopProcess()
+        private async void StopProcess()
         {
             if (timerCountStart.Enabled)
             {
@@ -429,7 +436,7 @@ namespace PJ24_010_Auto_Focus_CCD
             processStatus = ProcessStatus.ready;
             string _dataSerialType = $"RAY:RST";
             this.SendDataBuffer(_dataSerialType);
-            // await Task.Delay(500);
+            await Task.Delay(500);
             _dataSerialType = $"LED:0";
             this.SendDataBuffer(_dataSerialType);
             // Save Log
