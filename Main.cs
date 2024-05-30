@@ -324,5 +324,15 @@ namespace PJ24_010_Auto_Focus_CCD
             _historys = new Historys();
             _historys.Show();
         }
+
+        private void btnClearMes_Click(object sender, EventArgs e)
+        {
+            clearMESToolStripMenuItem1_Click(sender, e);
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

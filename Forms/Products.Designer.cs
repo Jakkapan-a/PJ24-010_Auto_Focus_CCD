@@ -241,7 +241,7 @@
             // cbType
             // 
             cbType.FormattingEnabled = true;
-            cbType.Items.AddRange(new object[] { "None", "PVM" });
+            cbType.Items.AddRange(new object[] { "None(6V)", "PVM(4.6V)" });
             cbType.Location = new Point(26, 110);
             cbType.Name = "cbType";
             cbType.Size = new Size(203, 23);

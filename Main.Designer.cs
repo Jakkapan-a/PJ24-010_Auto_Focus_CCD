@@ -33,6 +33,7 @@
             menuStrip1 = new MenuStrip();
             settingToolStripMenuItem = new ToolStripMenuItem();
             oNNXToolStripMenuItem = new ToolStripMenuItem();
+            historyToolStripMenuItem = new ToolStripMenuItem();
             modelsToolStripMenuItem = new ToolStripMenuItem();
             configurationToolStripMenuItem = new ToolStripMenuItem();
             testToolStripMenuItem = new ToolStripMenuItem();
@@ -70,7 +71,7 @@
             timer = new System.Windows.Forms.Timer(components);
             contextMenuStrip = new ContextMenuStrip(components);
             clearMESToolStripMenuItem = new ToolStripMenuItem();
-            historyToolStripMenuItem = new ToolStripMenuItem();
+            btnClearMes = new Button();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -101,15 +102,23 @@
             // 
             oNNXToolStripMenuItem.Image = Properties.Resources.onnx_icon_color;
             oNNXToolStripMenuItem.Name = "oNNXToolStripMenuItem";
-            oNNXToolStripMenuItem.Size = new Size(180, 22);
+            oNNXToolStripMenuItem.Size = new Size(159, 22);
             oNNXToolStripMenuItem.Text = "ONNX";
             oNNXToolStripMenuItem.Click += oNNXToolStripMenuItem_Click;
+            // 
+            // historyToolStripMenuItem
+            // 
+            historyToolStripMenuItem.Image = Properties.Resources.history__1_;
+            historyToolStripMenuItem.Name = "historyToolStripMenuItem";
+            historyToolStripMenuItem.Size = new Size(159, 22);
+            historyToolStripMenuItem.Text = "History";
+            historyToolStripMenuItem.Click += historyToolStripMenuItem_Click;
             // 
             // modelsToolStripMenuItem
             // 
             modelsToolStripMenuItem.Image = Properties.Resources.add_list_32;
             modelsToolStripMenuItem.Name = "modelsToolStripMenuItem";
-            modelsToolStripMenuItem.Size = new Size(180, 22);
+            modelsToolStripMenuItem.Size = new Size(159, 22);
             modelsToolStripMenuItem.Text = "Models CCD";
             modelsToolStripMenuItem.Click += modelsToolStripMenuItem_Click;
             // 
@@ -118,7 +127,7 @@
             configurationToolStripMenuItem.Image = Properties.Resources.settings__321;
             configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
             configurationToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            configurationToolStripMenuItem.Size = new Size(180, 22);
+            configurationToolStripMenuItem.Size = new Size(159, 22);
             configurationToolStripMenuItem.Text = "Options";
             configurationToolStripMenuItem.Click += configurationToolStripMenuItem_Click;
             // 
@@ -134,20 +143,21 @@
             runToolStripMenuItem.Image = Properties.Resources.start_up;
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(167, 22);
+            runToolStripMenuItem.Size = new Size(180, 22);
             runToolStripMenuItem.Text = "Run";
+            runToolStripMenuItem.Click += runToolStripMenuItem_Click;
             // 
             // parameterToolStripMenuItem
             // 
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
-            parameterToolStripMenuItem.Size = new Size(167, 22);
+            parameterToolStripMenuItem.Size = new Size(180, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
             // 
             // captureToolStripMenuItem
             // 
             captureToolStripMenuItem.Image = Properties.Resources.camera_logo;
             captureToolStripMenuItem.Name = "captureToolStripMenuItem";
-            captureToolStripMenuItem.Size = new Size(167, 22);
+            captureToolStripMenuItem.Size = new Size(180, 22);
             captureToolStripMenuItem.Text = "Capture";
             captureToolStripMenuItem.Click += captureToolStripMenuItem_Click;
             // 
@@ -155,7 +165,7 @@
             // 
             clearMESToolStripMenuItem1.Image = Properties.Resources.broom;
             clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
-            clearMESToolStripMenuItem1.Size = new Size(167, 22);
+            clearMESToolStripMenuItem1.Size = new Size(180, 22);
             clearMESToolStripMenuItem1.Text = "Clear MES";
             clearMESToolStripMenuItem1.Click += clearMESToolStripMenuItem1_Click;
             // 
@@ -182,6 +192,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnClearMes);
             panel1.Controls.Add(lbDateTime);
             panel1.Controls.Add(btnJdmPASS);
             panel1.Controls.Add(btnJdmNG);
@@ -459,13 +470,17 @@
             clearMESToolStripMenuItem.Size = new Size(127, 22);
             clearMESToolStripMenuItem.Text = "Clear MES";
             // 
-            // historyToolStripMenuItem
+            // btnClearMes
             // 
-            historyToolStripMenuItem.Image = Properties.Resources.history__1_;
-            historyToolStripMenuItem.Name = "historyToolStripMenuItem";
-            historyToolStripMenuItem.Size = new Size(180, 22);
-            historyToolStripMenuItem.Text = "History";
-            historyToolStripMenuItem.Click += historyToolStripMenuItem_Click;
+            btnClearMes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClearMes.BackColor = Color.MediumAquamarine;
+            btnClearMes.Location = new Point(119, 42);
+            btnClearMes.Name = "btnClearMes";
+            btnClearMes.Size = new Size(75, 31);
+            btnClearMes.TabIndex = 5;
+            btnClearMes.Text = "Clear MES";
+            btnClearMes.UseVisualStyleBackColor = false;
+            btnClearMes.Click += btnClearMes_Click;
             // 
             // Main
             // 
@@ -544,5 +559,6 @@
         private Button btnJdmPASS;
         private Button btnJdmNG;
         private ToolStripMenuItem historyToolStripMenuItem;
+        private Button btnClearMes;
     }
 }

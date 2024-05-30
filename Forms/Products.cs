@@ -20,7 +20,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
         }
         private int onnx_id = -1;
         private int id = -1;
-
+        private string typePVM = "PVM(4.6V)";
         private void Products_Load(object sender, EventArgs e)
         {
             cbType.SelectedIndex = 0;
@@ -68,7 +68,7 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             {
                 if (product == null) continue;
                 no++;
-                dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM" : "NONE", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.current_min / 1000:f2}", $"{(double)product.current_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
+                dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM(4.6V)" : "NONE(6.0V)", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.current_min / 1000:f2}", $"{(double)product.current_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
             }
         }
 
@@ -231,13 +231,15 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                 int selectedRow = Extensions.GetSelectedRowIndex(dgvProduct);
                 id = Convert.ToInt32(dgvProduct.Rows[selectedRow].Cells["id"].Value);
                 txtName.Text = dgvProduct.Rows[selectedRow].Cells["name"].Value.ToString();
-                cbType.SelectedIndex = dgvProduct.Rows[selectedRow].Cells["type"].Value.ToString() == "PVM" ? 1 : 0;
+                cbType.SelectedIndex = dgvProduct.Rows[selectedRow].Cells["type"].Value.ToString() == typePVM ? 1 : 0;
                 txtMinVoltage.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["voltage_min"].Value);
                 txtMaxVoltage.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["voltage_max"].Value);
                 txtMinAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["current_min"].Value);
                 txtMaxAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["current_max"].Value);
                 onnx_id = Product.Get(id).onnx_model_id;
                 txtOnnx.Text = Product.Get(id).GetOnnxModel().name;
+
+                // int selectType = dgvProduct.Rows[selectedRow].Cells["type"].Value.ToString() == "PVM" ? 1 : 0;
 
                 btnSave.Text = "Update";
                 btnSave.Enabled = true;

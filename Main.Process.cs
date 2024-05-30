@@ -169,6 +169,7 @@ namespace PJ24_010_Auto_Focus_CCD
 
                 // ------------------- Reset ------------------- //
                 this.txtQr.Text = "";
+                this.txtQr.ReadOnly = false;
                 this.ActiveControl = this.txtQr;
                 this.txtQr.Focus();
             }
@@ -212,7 +213,7 @@ namespace PJ24_010_Auto_Focus_CCD
         private bool isClone = false; // Clone ImagePredict
         private const string OK_SUFFIX = "_OK";
         private const string NG_SUFFIX = "_NG";
-        private string pathFolder = "";
+        private string pathFolder = "_T_T_";
         private Stopwatch stopwatchTestProcess = new Stopwatch();
 
         private async void TestProcess()
