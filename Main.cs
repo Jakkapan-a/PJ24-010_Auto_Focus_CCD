@@ -23,6 +23,8 @@ namespace PJ24_010_Auto_Focus_CCD
 
         private async void Main_Load(object sender, EventArgs e)
         {
+            this.Text = "Auto_Focus V1.0.0";
+
             this.btnReload.PerformClick();
             timer.Tick += TimerOnSecond_Tick;
             timer.Start();
@@ -90,7 +92,6 @@ namespace PJ24_010_Auto_Focus_CCD
 
                     Thread.Sleep(100);
                 }
-                
             });
             
             toolStripProgressBar1.Visible = false;
@@ -108,7 +109,7 @@ namespace PJ24_010_Auto_Focus_CCD
         }
         private void btnReload_Click(object sender, EventArgs e)
         {
-            // Debug.WriteLine($"Format ->> {((double)10110/1000):f2}");
+            // Load data
             RefreshVideoDevices();
             RefreshComboBoxWithList(comBaudRate, this.baudList, false);
             RefreshComboBoxWithList(comPort, System.IO.Ports.SerialPort.GetPortNames(), true);
@@ -178,7 +179,6 @@ namespace PJ24_010_Auto_Focus_CCD
                     {
                         throw new Exception("Serial port not connected.");
                     }
-
                 }
                 else
                 {
@@ -192,7 +192,6 @@ namespace PJ24_010_Auto_Focus_CCD
                         this.pictureBox.Image?.Dispose();
                         this.pictureBox.Image = null;
                     }
-
                     DisconnectSerial();
                 }
             }

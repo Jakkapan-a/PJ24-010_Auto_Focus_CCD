@@ -45,6 +45,7 @@
             toolStripProgressBar1 = new ToolStripProgressBar();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             panel1 = new Panel();
+            btnClearMes = new Button();
             lbDateTime = new Label();
             btnJdmPASS = new Button();
             btnJdmNG = new Button();
@@ -71,7 +72,6 @@
             timer = new System.Windows.Forms.Timer(components);
             contextMenuStrip = new ContextMenuStrip(components);
             clearMESToolStripMenuItem = new ToolStripMenuItem();
-            btnClearMes = new Button();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -143,21 +143,21 @@
             runToolStripMenuItem.Image = Properties.Resources.start_up;
             runToolStripMenuItem.Name = "runToolStripMenuItem";
             runToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.R;
-            runToolStripMenuItem.Size = new Size(180, 22);
+            runToolStripMenuItem.Size = new Size(167, 22);
             runToolStripMenuItem.Text = "Run";
             runToolStripMenuItem.Click += runToolStripMenuItem_Click;
             // 
             // parameterToolStripMenuItem
             // 
             parameterToolStripMenuItem.Name = "parameterToolStripMenuItem";
-            parameterToolStripMenuItem.Size = new Size(180, 22);
+            parameterToolStripMenuItem.Size = new Size(167, 22);
             parameterToolStripMenuItem.Text = "Parameter Simple";
             // 
             // captureToolStripMenuItem
             // 
             captureToolStripMenuItem.Image = Properties.Resources.camera_logo;
             captureToolStripMenuItem.Name = "captureToolStripMenuItem";
-            captureToolStripMenuItem.Size = new Size(180, 22);
+            captureToolStripMenuItem.Size = new Size(167, 22);
             captureToolStripMenuItem.Text = "Capture";
             captureToolStripMenuItem.Click += captureToolStripMenuItem_Click;
             // 
@@ -165,7 +165,7 @@
             // 
             clearMESToolStripMenuItem1.Image = Properties.Resources.broom;
             clearMESToolStripMenuItem1.Name = "clearMESToolStripMenuItem1";
-            clearMESToolStripMenuItem1.Size = new Size(180, 22);
+            clearMESToolStripMenuItem1.Size = new Size(167, 22);
             clearMESToolStripMenuItem1.Text = "Clear MES";
             clearMESToolStripMenuItem1.Click += clearMESToolStripMenuItem1_Click;
             // 
@@ -206,6 +206,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(207, 706);
             panel1.TabIndex = 2;
+            // 
+            // btnClearMes
+            // 
+            btnClearMes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClearMes.BackColor = Color.MediumAquamarine;
+            btnClearMes.Location = new Point(119, 42);
+            btnClearMes.Name = "btnClearMes";
+            btnClearMes.Size = new Size(75, 31);
+            btnClearMes.TabIndex = 5;
+            btnClearMes.Text = "Clear MES";
+            btnClearMes.UseVisualStyleBackColor = false;
+            btnClearMes.Click += btnClearMes_Click;
             // 
             // lbDateTime
             // 
@@ -470,18 +482,6 @@
             clearMESToolStripMenuItem.Size = new Size(127, 22);
             clearMESToolStripMenuItem.Text = "Clear MES";
             // 
-            // btnClearMes
-            // 
-            btnClearMes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClearMes.BackColor = Color.MediumAquamarine;
-            btnClearMes.Location = new Point(119, 42);
-            btnClearMes.Name = "btnClearMes";
-            btnClearMes.Size = new Size(75, 31);
-            btnClearMes.TabIndex = 5;
-            btnClearMes.Text = "Clear MES";
-            btnClearMes.UseVisualStyleBackColor = false;
-            btnClearMes.Click += btnClearMes_Click;
-            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -495,7 +495,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Main";
+            Text = "Auto_Focus V1.0.0";
             WindowState = FormWindowState.Maximized;
             FormClosing += Main_FormClosing;
             Load += Main_Load;
