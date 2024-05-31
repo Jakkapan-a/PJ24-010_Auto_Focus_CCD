@@ -78,7 +78,14 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
 
         public OnnxModel? GetOnnxModel()
         {
-            return OnnxModel.Get(this.onnx_model_id);
+            try
+            {
+                return OnnxModel.Get(this.onnx_model_id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         public void Update()
         {

@@ -122,7 +122,7 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             return SQLite.SQliteDataAccess.Query<OnnxModel>(sql, parameters);
         }
 
-        internal static bool IsNameExist(string text, int id = -1)
+        public static bool IsNameExist(string text, int id = -1)
         {
             string sql = "SELECT COUNT(*) FROM onnx_model WHERE name = @name";
             if(id != -1){
@@ -130,6 +130,42 @@ namespace PJ24_010_Auto_Focus_CCD.SQLite
             }
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters["@name"] = text;
+            parameters["@id"] = id;
+            return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault() > 0;
+        }
+
+        public static bool IsPathModelExist(string text, int id = -1)
+        {
+            string sql = "SELECT COUNT(*) FROM onnx_model WHERE path_model = @path_model";
+            if(id != -1){
+                sql += " AND id != @id";
+            }
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters["@path_model"] = text;
+            parameters["@id"] = id;
+            return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault() > 0;
+        }
+
+        public static bool IsPathLabelExist(string text, int id = -1)
+        {
+            string sql = "SELECT COUNT(*) FROM onnx_model WHERE path_label = @path_label";
+            if(id != -1){
+                sql += " AND id != @id";
+            }
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters["@path_label"] = text;
+            parameters["@id"] = id;
+            return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault() > 0;
+        }
+
+        public static bool IsPathTemplateExist(string text, int id = -1)
+        {
+            string sql = "SELECT COUNT(*) FROM onnx_model WHERE path_template = @path_template";
+            if(id != -1){
+                sql += " AND id != @id";
+            }
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters["@path_template"] = text;
             parameters["@id"] = id;
             return SQLite.SQliteDataAccess.Query<int>(sql, parameters).FirstOrDefault() > 0;
         }

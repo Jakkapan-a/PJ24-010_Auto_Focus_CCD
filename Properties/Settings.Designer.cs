@@ -130,5 +130,17 @@ namespace PJ24_010_Auto_Focus_CCD.Properties {
                 this["IsUseDate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsByPass {
+            get {
+                return ((bool)(this["IsByPass"]));
+            }
+            set {
+                this["IsByPass"] = value;
+            }
+        }
     }
 }

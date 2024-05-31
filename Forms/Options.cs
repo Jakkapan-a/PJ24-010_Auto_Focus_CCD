@@ -30,6 +30,9 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
 
             this.txtScore.Value = (decimal)Properties.Settings.Default.Score;
             this.txtCountTest.Value = Properties.Settings.Default.CountDownStart / 10;
+
+
+            this.cbByPass.Checked = Properties.Settings.Default.IsByPass;
         }
 
         private void txtScore_ValueChanged(object sender, EventArgs e)
@@ -85,6 +88,12 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
         {
             // Save the value to the settings
             Properties.Settings.Default.KeyNGDescription = this.txtKeyNGDescription.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void cbByPass_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.IsByPass = this.cbByPass.Checked;
             Properties.Settings.Default.Save();
         }
     }

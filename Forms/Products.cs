@@ -68,7 +68,9 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
             {
                 if (product == null) continue;
                 no++;
-                dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM(4.6V)" : "NONE(6.0V)", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.current_min / 1000:f2}", $"{(double)product.current_max / 1000:f2}", product.GetOnnxModel().name, product.updated_at);
+                int onnx_id = product.onnx_model_id;
+                OnnxModel onnx = OnnxModel.Get(onnx_id);
+                dt.Rows.Add(product.id, no, product.name, product.type == 1 ? "PVM(4.6V)" : "NONE(6.0V)", $"{(double)product.voltage_min / 1000:f2}", $"{(double)product.voltage_max / 1000:f2}", $"{(double)product.current_min / 1000:f2}", $"{(double)product.current_max / 1000:f2}", onnx == null?"-": onnx.name, product.updated_at);
             }
         }
 
@@ -237,10 +239,9 @@ namespace PJ24_010_Auto_Focus_CCD.Forms
                 txtMinAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["current_min"].Value);
                 txtMaxAmp.Value = Convert.ToDecimal(dgvProduct.Rows[selectedRow].Cells["current_max"].Value);
                 onnx_id = Product.Get(id).onnx_model_id;
-                txtOnnx.Text = Product.Get(id).GetOnnxModel().name;
-
-                // int selectType = dgvProduct.Rows[selectedRow].Cells["type"].Value.ToString() == "PVM" ? 1 : 0;
-
+                OnnxModel onnx = OnnxModel.Get(onnx_id);
+                txtOnnx.Text = onnx == null ?"-":onnx.name;
+                
                 btnSave.Text = "Update";
                 btnSave.Enabled = true;
             }

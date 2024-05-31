@@ -179,7 +179,6 @@ namespace PJ24_010_Auto_Focus_CCD
         {
             if (processStatus == ProcessStatus.none)
             {
-                // MessageBox.Show("Invalid Product, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 lbTitle.Text = "QR Code Invalid, Please scan again";
                 lbTitle.ForeColor = Color.Black;
                 this.lbTitle.BackColor = Color.Orange;
@@ -188,7 +187,6 @@ namespace PJ24_010_Auto_Focus_CCD
 
             if (processStatus != ProcessStatus.wait_start)
             {
-                // MessageBox.Show("Invalid Process, Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string message = "QR Code Invalid, Please scan again";
                 if (txtQr.Text.Length > 0)
                 {
@@ -206,7 +204,7 @@ namespace PJ24_010_Auto_Focus_CCD
             // Code...
 
 
-            // Count 1.5 sec for test
+            // Count 1.0 sec for test
             countDownStart = Properties.Settings.Default.CountDownStart;
             timerCountStart.Start();
         }
@@ -281,7 +279,10 @@ namespace PJ24_010_Auto_Focus_CCD
                 bool isResultNone = false;
                 foreach (var item in templatePredictor)
                 {
-                    if (item.Value == ItemResults.none)
+                    if(Properties.Settings.Default.IsByPass){
+                        SetLog($"Check : {item.Key} = BY PASS");
+                        continue;
+                    }else if (item.Value == ItemResults.none)
                     {
                         isPass = false;
                         isResultNone = true;
@@ -298,6 +299,10 @@ namespace PJ24_010_Auto_Focus_CCD
                 history.voltage = (int)(currentVoltage * 1000);
                 history.current = (int)(currentCurrent * 1000);
                 // Check Voltage and Current
+                if(Properties.Settings.Default.IsByPass){
+                    SetLog($"Voltage: {this.currentVoltage}V - BY PASS");
+                }
+                else
                 if (this.currentVoltage < (product?.voltage_min / 1000) || this.currentVoltage > (product?.voltage_max / 1000))
                 {
                     isPass = false;
@@ -308,6 +313,10 @@ namespace PJ24_010_Auto_Focus_CCD
                     SetLog($"Voltage: {this.currentVoltage}V - {product?.voltage_min / 1000}-{product?.voltage_max / 1000}V - OK");
                 }
 
+                if(Properties.Settings.Default.IsByPass){
+                    SetLog($"Current: {this.currentCurrent}mA - BY PASS");
+                }
+                else
                 if (this.currentCurrent < (product?.current_min / 1000) || this.currentCurrent > (product?.current_max / 1000))
                 {
                     isPass = false;
@@ -379,7 +388,7 @@ namespace PJ24_010_Auto_Focus_CCD
             history.path_folder = $"{txtQr.Text}_{time}";
 
             // check folder
-            pathFolder = Path.Combine(Properties.Resources.path_predict, date, $"{txtQr.Text}_{time}");
+            pathFolder = Path.Combine(Properties.Resources.path_predict,product.name ?? "_T_T_", date, $"{txtQr.Text}_{time}");
             if (!Directory.Exists(pathFolder))
             {
                 Directory.CreateDirectory(pathFolder);

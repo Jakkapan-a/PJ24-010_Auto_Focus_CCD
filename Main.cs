@@ -21,20 +21,91 @@ namespace PJ24_010_Auto_Focus_CCD
         }
         public string[] baudList = { "9600", "19200", "38400", "57600", "115200" };
 
-        private void Main_Load(object sender, EventArgs e)
+        private async void Main_Load(object sender, EventArgs e)
         {
             this.btnReload.PerformClick();
             timer.Tick += TimerOnSecond_Tick;
             timer.Start();
 
-            Task.Run(() =>
+            toolStripProgressBar1.Visible = true;
+            toolStripProgressBar1.Value = 0;
+
+            await Task.Run(() =>
             {
                 OnnxModel.CreateTable();
                 Product.CreateTable();
                 History.CreateTable();
-            });
-        }
 
+                // Delete old files
+                string[] files = Directory.GetFiles(Properties.Resources.path_models, "*.onnx");
+                int i = 0;
+                foreach (string file in files)
+                {
+                    FileInfo info = new FileInfo(file);
+                    string fileName = Path.GetFileName(file);
+                    if (!OnnxModel.IsPathModelExist(fileName))
+                    {
+                        // Move file to Recycle Bin
+                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+                    }
+                    i++;
+                    // Update progress bar
+                    SetProcessBar(i * 100 / files.Length);
+
+                    Thread.Sleep(100);
+                }
+
+                files = Directory.GetFiles(Properties.Resources.path_models, "*.txt");
+                i = 0;
+                foreach (string file in files)
+                {
+                    FileInfo info = new FileInfo(file);
+                    string fileName = Path.GetFileName(file);
+                    if (!OnnxModel.IsPathLabelExist(fileName))
+                    {
+                        // Move file to Recycle Bin
+                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+                    }
+                    i++;
+                    // Update progress bar
+                    SetProcessBar(i * 100 / files.Length);
+
+                    Thread.Sleep(100);
+                }
+
+                files = Directory.GetFiles(Properties.Resources.path_models, "*.yaml");
+                i = 0;
+                foreach (string file in files)
+                {
+                    FileInfo info = new FileInfo(file);
+                    string fileName = Path.GetFileName(file);
+                    if (!OnnxModel.IsPathTemplateExist(fileName))
+                    {
+                        // Move file to Recycle Bin
+                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin);
+                    }
+                    i++;
+                    // Update progress bar
+                    SetProcessBar(i * 100 / files.Length);
+
+                    Thread.Sleep(100);
+                }
+                
+            });
+            
+            toolStripProgressBar1.Visible = false;
+            toolStripProgressBar1.Value = 0;
+        }
+        private void SetProcessBar(int value)
+        {
+            // Check invoke required
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => { SetProcessBar(value); }));
+                return;
+            }
+            toolStripProgressBar1.Value = value;
+        }
         private void btnReload_Click(object sender, EventArgs e)
         {
             // Debug.WriteLine($"Format ->> {((double)10110/1000):f2}");

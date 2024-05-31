@@ -49,6 +49,7 @@
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
+            cbByPass = new CheckBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtClearDelay).BeginInit();
             groupBox2.SuspendLayout();
@@ -66,7 +67,7 @@
             groupBox1.Controls.Add(txtClearMessage);
             groupBox1.Location = new Point(16, 56);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(330, 92);
+            groupBox1.Size = new Size(322, 92);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Auto Clear";
@@ -77,7 +78,7 @@
             txtClearDelay.Location = new Point(92, 52);
             txtClearDelay.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
             txtClearDelay.Name = "txtClearDelay";
-            txtClearDelay.Size = new Size(225, 23);
+            txtClearDelay.Size = new Size(217, 23);
             txtClearDelay.TabIndex = 3;
             txtClearDelay.ValueChanged += txtClearDelay_ValueChanged;
             // 
@@ -104,7 +105,7 @@
             txtClearMessage.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtClearMessage.Location = new Point(93, 22);
             txtClearMessage.Name = "txtClearMessage";
-            txtClearMessage.Size = new Size(224, 23);
+            txtClearMessage.Size = new Size(216, 23);
             txtClearMessage.TabIndex = 0;
             txtClearMessage.TextChanged += txtClearMessage_TextChanged;
             // 
@@ -119,7 +120,7 @@
             groupBox2.Controls.Add(txtKeyNG);
             groupBox2.Location = new Point(16, 154);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(330, 155);
+            groupBox2.Size = new Size(322, 155);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "KEY NG";
@@ -130,7 +131,7 @@
             txtKeyNGDelay.Location = new Point(92, 51);
             txtKeyNGDelay.Maximum = new decimal(new int[] { 5000, 0, 0, 0 });
             txtKeyNGDelay.Name = "txtKeyNGDelay";
-            txtKeyNGDelay.Size = new Size(225, 23);
+            txtKeyNGDelay.Size = new Size(217, 23);
             txtKeyNGDelay.TabIndex = 3;
             txtKeyNGDelay.ValueChanged += txtKeyNGDelay_ValueChanged;
             // 
@@ -139,7 +140,7 @@
             txtKeyNGDescription.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtKeyNGDescription.Location = new Point(92, 80);
             txtKeyNGDescription.Name = "txtKeyNGDescription";
-            txtKeyNGDescription.Size = new Size(225, 69);
+            txtKeyNGDescription.Size = new Size(217, 69);
             txtKeyNGDescription.TabIndex = 3;
             txtKeyNGDescription.Text = "";
             txtKeyNGDescription.TextChanged += txtKeyNGDescription_TextChanged;
@@ -176,7 +177,7 @@
             txtKeyNG.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtKeyNG.Location = new Point(93, 22);
             txtKeyNG.Name = "txtKeyNG";
-            txtKeyNG.Size = new Size(224, 23);
+            txtKeyNG.Size = new Size(216, 23);
             txtKeyNG.TabIndex = 0;
             txtKeyNG.TextChanged += txtKeyNG_TextChanged;
             // 
@@ -193,9 +194,9 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new Point(0, 374);
+            statusStrip1.Location = new Point(0, 409);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(358, 22);
+            statusStrip1.Size = new Size(350, 22);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -207,7 +208,7 @@
             txtScore.Location = new Point(109, 315);
             txtScore.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             txtScore.Name = "txtScore";
-            txtScore.Size = new Size(202, 23);
+            txtScore.Size = new Size(194, 23);
             txtScore.TabIndex = 4;
             txtScore.Value = new decimal(new int[] { 5, 0, 0, 65536 });
             txtScore.ValueChanged += txtScore_ValueChanged;
@@ -220,7 +221,7 @@
             txtCountTest.Location = new Point(109, 344);
             txtCountTest.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             txtCountTest.Name = "txtCountTest";
-            txtCountTest.Size = new Size(202, 23);
+            txtCountTest.Size = new Size(194, 23);
             txtCountTest.TabIndex = 5;
             txtCountTest.Value = new decimal(new int[] { 15, 0, 0, 65536 });
             txtCountTest.ValueChanged += txtCountTest_ValueChanged;
@@ -245,6 +246,7 @@
             // 
             // label8
             // 
+            label8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label8.AutoSize = true;
             label8.Location = new Point(317, 323);
             label8.Name = "label8";
@@ -254,6 +256,7 @@
             // 
             // label9
             // 
+            label9.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label9.AutoSize = true;
             label9.Location = new Point(317, 346);
             label9.Name = "label9";
@@ -261,11 +264,24 @@
             label9.TabIndex = 2;
             label9.Text = "Sec";
             // 
+            // cbByPass
+            // 
+            cbByPass.AutoSize = true;
+            cbByPass.ForeColor = Color.Red;
+            cbByPass.Location = new Point(12, 387);
+            cbByPass.Name = "cbByPass";
+            cbByPass.Size = new Size(69, 19);
+            cbByPass.TabIndex = 6;
+            cbByPass.Text = "BY PASS";
+            cbByPass.UseVisualStyleBackColor = true;
+            cbByPass.CheckedChanged += cbByPass_CheckedChanged;
+            // 
             // Options
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(358, 396);
+            ClientSize = new Size(350, 431);
+            Controls.Add(cbByPass);
             Controls.Add(txtCountTest);
             Controls.Add(txtScore);
             Controls.Add(label7);
@@ -314,5 +330,6 @@
         private Label label7;
         private Label label8;
         private Label label9;
+        private CheckBox cbByPass;
     }
 }
